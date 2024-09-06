@@ -1,3 +1,5 @@
+import HomePage from "./HomePage/HomePage";
+
 export default function Home() {
-  return <h1>pozdro</h1>;
+  return <HomePage />;
 }
