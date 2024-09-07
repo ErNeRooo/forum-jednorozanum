@@ -1,7 +1,15 @@
 import type { Metadata } from "next";
+import { Handjet } from "next/font/google";
+
+const inter = Handjet({
+  subsets: ["latin"],
+  weight: ["300", "400"],
+  display: "swap",
+  adjustFontFallback: false,
+});
 
 export const metadata: Metadata = {
-  title: "Forum Jednorożanum",
+  title: "Forum Jednorozanum",
 };
 
 export default function RootLayout({
@@ -11,7 +19,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body className={inter.className}>{children}</body>
     </html>
   );
 }
