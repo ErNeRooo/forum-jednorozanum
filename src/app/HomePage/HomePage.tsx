@@ -1,6 +1,5 @@
-import { BaseSyntheticEvent } from "react";
 import styles from "./HomePage.module.sass";
-import ConsolePrompt from "../components/ConsolePrompt/ConsolePrompt";
+import ConsoleContent from "../components/ConsoleContent/ConsoleContent";
 
 const HomePage = () => {
   const consoleHistory: string[] = [];
@@ -18,6 +17,7 @@ const HomePage = () => {
       <span>{"AVAILABLE COMMANDS:"}</span>
       <span>{" - forum login (to log into your account)"}</span>
       <span>{" - forum register (to create new account)"}</span>
+      <ConsoleContent></ConsoleContent>
     </div>
   );
 };
