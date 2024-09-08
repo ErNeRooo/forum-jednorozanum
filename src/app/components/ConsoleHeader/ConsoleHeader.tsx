@@ -10,13 +10,13 @@ const ConsoleHeader = () => {
         }
       </span>
       <br />
-      <span>{"PS C:\\forum-jednorozanum> help"}</span>
+      <span>{"PS C:\\forum-jednorozanum> forum help"}</span>
       <span className={styles.response}>{"AVAILABLE COMMANDS:"}</span>
       <span className={styles.response}>
-        {" - forum login (to log into your account)"}
+        {"forum login (to log into your account)"}
       </span>
       <span className={styles.response}>
-        {" - forum register (to create new account)"}
+        {"forum register (to create new account)"}
       </span>
     </div>
   );
