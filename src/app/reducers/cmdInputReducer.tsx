@@ -1,8 +1,9 @@
 import { ReactElement, ReducerAction, ReducerWithoutAction } from "react";
 import styles from "../components/ConsoleContent/ConsoleContent.module.sass";
+import HelpMessage from "../components/HelpMessage/HelpMessage";
 
 const CmdInputReducer = (state: ReactElement[], { value }: Action) => {
-  const availableCommands = ["login", "register"];
+  const availableCommands = ["login", "register", "help"];
   const availablePrograms = ["forum"];
   const currentPrompt = (
     <span key={state.length}>{"PS C:\\forum-jednorozanum> " + value}</span>
@@ -42,6 +43,12 @@ const CmdInputReducer = (state: ReactElement[], { value }: Action) => {
     return [...state, currentPrompt, ProgramNotFoundErrorMessage];
   } else if (!availableCommands.includes(commandString)) {
     return [...state, currentPrompt, CommandNotFoundErrorMessage];
+  } else if (commandString === "help") {
+    return [...state, currentPrompt, <HelpMessage key={state.length} />];
+  } else if (commandString === "login") {
+    return [...state, currentPrompt];
+  } else if (commandString === "register") {
+    return [...state, currentPrompt];
   }
   return [...state, currentPrompt];
 };
