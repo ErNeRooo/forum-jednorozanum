@@ -10,6 +10,8 @@ const inter = Handjet({
 
 export const metadata: Metadata = {
   title: "Forum Jednorozanum",
+  description: "Forum Jednorozanum",
+  keywords: ["Forum", "Jednorozanum", "Forum Jednorozanum"],
 };
 
 export default function RootLayout({
