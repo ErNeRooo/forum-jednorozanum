@@ -10,6 +10,9 @@ const HelpMessage = () => {
       <span className={styles.response}>
         {"forum register (to create new account)"}
       </span>
+      <span className={styles.response}>
+        {"forum help (to see all commands)"}
+      </span>
     </>
   );
 };
