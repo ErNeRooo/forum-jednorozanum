@@ -1,5 +1,4 @@
 import { useState } from "react";
-import styles from "../ConsoleContent/ConsoleContent.module.sass";
 import ConsoleInput from "../ConsoleInput/ConsoleInput";
 import { Action } from "@/app/reducers/cmdInputReducer";
 
@@ -15,14 +14,14 @@ const LoginForm = ({ dispatch }: Props) => {
     if (login === "") {
       setLogin(target.value);
       dispatch({
-        type: "justSaveCommand",
+        type: "just save command",
         value: target.value,
         consoleTitle: "Enter your login: ",
       });
     } else {
       setPassword(target.value);
       dispatch({
-        type: "justSaveCommand",
+        type: "just save command",
         value: target.value,
         consoleTitle: "Enter your password: ",
       });

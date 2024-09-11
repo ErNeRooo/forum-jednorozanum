@@ -38,6 +38,22 @@ const CmdInputReducer = (
     </span>
   );
 
+  const WrongLoginLengthErrorMessage = () => (
+    <span className={styles.errorMessage}>
+      {`Your login must be between 4 and 24 characters.`}
+    </span>
+  );
+  const TooWeakPasswordErrorMessage = () => (
+    <span className={styles.errorMessage}>
+      {`Your password must be at least 8 characters long.`}
+    </span>
+  );
+  const PasswordsDoesNotMatchErrorMessage = () => (
+    <span className={styles.errorMessage}>
+      {`Your passwords do not match.`}
+    </span>
+  );
+
   const currentInput: ReactElement = (
     <span>{`${consoleTitle} ${fullPrompt}`}</span>
   );
@@ -49,7 +65,13 @@ const CmdInputReducer = (
       return [...state, currentInput, CommandNotFoundErrorMessage()];
     case "help":
       return [...state, currentInput, <HelpMessage key={state.length} />];
-    case "justSaveCommand":
+    case "wrong login length":
+      return [...state, currentInput, WrongLoginLengthErrorMessage()];
+    case "to weak password":
+      return [...state, currentInput, TooWeakPasswordErrorMessage()];
+    case "passwords does not match":
+      return [...state, currentInput, PasswordsDoesNotMatchErrorMessage()];
+    case "just save command":
       return [...state, currentInput];
     default:
       return state;

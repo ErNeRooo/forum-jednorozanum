@@ -11,6 +11,7 @@ import {
 import cmdInputReducer from "@/app/reducers/cmdInputReducer";
 import HelpMessage from "../HelpMessage/HelpMessage";
 import LoginForm from "../LoginForm/LoginForm";
+import RegisterForm from "../RegisterForm/RegisterForm";
 import { SplitPrompt } from "@/app/utils/SplitPrompt";
 import { PromptAnswer } from "@/app/types/PromptAnswer";
 
@@ -72,7 +73,7 @@ const ConsoleContent = () => {
 
       case "login":
         dispatch({
-          type: "justSaveCommand",
+          type: "just save command",
           value: target.value,
           consoleTitle: "PS C:\\forum-jednorozanum>",
         });
@@ -81,10 +82,11 @@ const ConsoleContent = () => {
 
       case "register":
         dispatch({
-          type: "justSaveCommand",
+          type: "just save command",
           value: target.value,
           consoleTitle: "PS C:\\forum-jednorozanum>",
         });
+        setCurrentConsoleInput(<RegisterForm dispatch={dispatch} />);
         break;
     }
 

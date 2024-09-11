@@ -4,4 +4,7 @@ export type PromptAnswer =
   | "help"
   | "login"
   | "register"
-  | "justSaveCommand";
+  | "just save command"
+  | "wrong login length"
+  | "to weak password"
+  | "passwords does not match";
