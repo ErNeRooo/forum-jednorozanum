@@ -33,29 +33,35 @@ const CmdInputReducer = (
   );
 
   const CommandNotFoundErrorMessage = () => (
-    <span className={styles.errorMessage}>
+    <span key={state.length + 1} className={styles.errorMessage}>
       {`${program}: \'${command}\' is not a ${program} command. See 'forum help'.`}
     </span>
   );
 
-  const WrongLoginLengthErrorMessage = () => (
-    <span className={styles.errorMessage}>
-      {`Your login must be between 4 and 24 characters.`}
+  const WrongNameLengthErrorMessage = () => (
+    <span key={state.length + 1} className={styles.errorMessage}>
+      {`Your name must be between 4 and 24 characters.`}
     </span>
   );
   const TooWeakPasswordErrorMessage = () => (
-    <span className={styles.errorMessage}>
+    <span key={state.length + 1} className={styles.errorMessage}>
       {`Your password must be at least 8 characters long.`}
     </span>
   );
   const PasswordsDoesNotMatchErrorMessage = () => (
-    <span className={styles.errorMessage}>
+    <span key={state.length + 1} className={styles.errorMessage}>
       {`Your passwords do not match.`}
     </span>
   );
 
+  const NotValidEmailFormatErrorMessage = () => (
+    <span key={state.length + 1} className={styles.errorMessage}>
+      {`${value} is not a valid email format.`}
+    </span>
+  );
+
   const currentInput: ReactElement = (
-    <span>{`${consoleTitle} ${fullPrompt}`}</span>
+    <span key={state.length}>{`${consoleTitle} ${fullPrompt}`}</span>
   );
 
   switch (type) {
@@ -66,11 +72,13 @@ const CmdInputReducer = (
     case "help":
       return [...state, currentInput, <HelpMessage key={state.length} />];
     case "wrong login length":
-      return [...state, currentInput, WrongLoginLengthErrorMessage()];
+      return [...state, currentInput, WrongNameLengthErrorMessage()];
     case "to weak password":
       return [...state, currentInput, TooWeakPasswordErrorMessage()];
     case "passwords does not match":
       return [...state, currentInput, PasswordsDoesNotMatchErrorMessage()];
+    case "not valid email format":
+      return [...state, currentInput, NotValidEmailFormatErrorMessage()];
     case "just save command":
       return [...state, currentInput];
     default:

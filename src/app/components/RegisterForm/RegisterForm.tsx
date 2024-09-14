@@ -2,12 +2,14 @@ import { useState } from "react";
 import ConsoleInput from "../ConsoleInput/ConsoleInput";
 import { Action } from "@/app/reducers/cmdInputReducer";
 import HideString from "@/app/utils/HideString";
+import AddAccountToDatabase from "@/app/utils/AddAccountToDatabase";
 
 const RegisterForm = ({ dispatch }: Props) => {
-  const [login, setLogin] = useState("");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const [inputText, setInputText] = useState("Enter your login: ");
+  const [inputText, setInputText] = useState("Enter your name: ");
   const [inputType, setInputType] = useState("text");
 
   const handleOnEnter = (e: React.KeyboardEvent<HTMLInputElement>): void => {
@@ -15,9 +17,31 @@ const RegisterForm = ({ dispatch }: Props) => {
 
     const target = e.target as HTMLInputElement;
 
-    if (login === "") {
+    console.log("bajo jajo");
+
+    if (name === "") {
       if (target.value.length >= 4 && target.value.length <= 24) {
-        setLogin(target.value);
+        setName(target.value);
+        dispatch({
+          type: "just save command",
+          value: target.value,
+          consoleTitle: inputText,
+        });
+
+        setInputText("Enter your email: ");
+        setInputType("text");
+      } else {
+        dispatch({
+          type: "wrong login length",
+          value: target.value,
+          consoleTitle: inputText,
+        });
+      }
+    } else if (email === "") {
+      const emailRegex: RegExp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+      if (emailRegex.test(target.value)) {
+        setEmail(target.value);
         dispatch({
           type: "just save command",
           value: target.value,
@@ -28,7 +52,7 @@ const RegisterForm = ({ dispatch }: Props) => {
         setInputType("password");
       } else {
         dispatch({
-          type: "wrong login length",
+          type: "not valid email format",
           value: target.value,
           consoleTitle: inputText,
         });
@@ -58,6 +82,8 @@ const RegisterForm = ({ dispatch }: Props) => {
           value: HideString(target.value),
           consoleTitle: inputText,
         });
+
+        AddAccountToDatabase(name, email, password);
       } else {
         dispatch({
           type: "passwords does not match",

@@ -7,4 +7,5 @@ export type PromptAnswer =
   | "just save command"
   | "wrong login length"
   | "to weak password"
-  | "passwords does not match";
+  | "passwords does not match"
+  | "not valid email format";

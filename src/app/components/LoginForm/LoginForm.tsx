@@ -3,7 +3,7 @@ import ConsoleInput from "../ConsoleInput/ConsoleInput";
 import { Action } from "@/app/reducers/cmdInputReducer";
 
 const LoginForm = ({ dispatch }: Props) => {
-  const [login, setLogin] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleOnEnter = (e: React.KeyboardEvent<HTMLInputElement>): void => {
@@ -11,12 +11,12 @@ const LoginForm = ({ dispatch }: Props) => {
 
     const target = e.target as HTMLInputElement;
 
-    if (login === "") {
-      setLogin(target.value);
+    if (email === "") {
+      setEmail(target.value);
       dispatch({
         type: "just save command",
         value: target.value,
-        consoleTitle: "Enter your login: ",
+        consoleTitle: "Enter your email: ",
       });
     } else {
       setPassword(target.value);
@@ -34,9 +34,9 @@ const LoginForm = ({ dispatch }: Props) => {
     <ConsoleInput
       handler={handleOnEnter}
       consoleText={
-        login === "" ? "Enter your login: " : "Enter your password: "
+        email === "" ? "Enter your email: " : "Enter your password: "
       }
-      type={login === "" ? "text" : "password"}
+      type={email === "" ? "text" : "password"}
     ></ConsoleInput>
   );
 };
