@@ -5,7 +5,7 @@ import FindUserNameByEmail from "@/app/utils/FindUserNameByEmail";
 import useLogInAccount from "@/app/hooks/useLogInAccount";
 import HideString from "@/app/utils/HideString";
 
-const LoginForm = ({ dispatch }: Props) => {
+const LoginForm = ({ dispatch, ExitForm }: Props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isInputVisible, setIsInputVisible] = useState(true);
@@ -56,7 +56,6 @@ const LoginForm = ({ dispatch }: Props) => {
             });
           });
         } else {
-          setIsInputVisible(true);
           console.log(errorMessage);
 
           if (errorMessage === "Firebase: Error (auth/wrong-password).") {
@@ -73,12 +72,19 @@ const LoginForm = ({ dispatch }: Props) => {
               value: HideString(target.value),
               consoleTitle: "Enter your password: ",
             });
+          } else {
+            dispatch({
+              type: "account log in error",
+              value: HideString(target.value),
+              consoleTitle: "Enter your password: ",
+            });
           }
 
-          setEmail("");
-          setPassword("");
+          ExitForm();
         }
 
+        setEmail("");
+        setPassword("");
         target.value = "";
       });
     }
@@ -99,6 +105,7 @@ const LoginForm = ({ dispatch }: Props) => {
 
 interface Props {
   dispatch: React.Dispatch<Action>;
+  ExitForm: () => void;
 }
 
 export default LoginForm;

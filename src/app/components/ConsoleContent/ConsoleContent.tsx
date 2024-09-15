@@ -31,7 +31,7 @@ const ConsoleContent = () => {
     <span>{"PS C:\\forum-jednorozanum> "}</span>
   );
 
-  useEffect(() => {
+  const setDefaultInput = () => {
     setCurrentConsoleInput(
       <ConsoleInput
         handler={handleOnEnter}
@@ -39,6 +39,10 @@ const ConsoleContent = () => {
         type="text"
       />
     );
+  };
+
+  useEffect(() => {
+    setDefaultInput();
   }, []);
 
   const handleOnEnter = (e: React.KeyboardEvent<HTMLInputElement>): void => {
@@ -77,7 +81,9 @@ const ConsoleContent = () => {
           value: target.value,
           consoleTitle: "PS C:\\forum-jednorozanum>",
         });
-        setCurrentConsoleInput(<LoginForm dispatch={dispatch} />);
+        setCurrentConsoleInput(
+          <LoginForm dispatch={dispatch} ExitForm={() => setDefaultInput()} />
+        );
         break;
 
       case "register":
@@ -86,7 +92,12 @@ const ConsoleContent = () => {
           value: target.value,
           consoleTitle: "PS C:\\forum-jednorozanum>",
         });
-        setCurrentConsoleInput(<RegisterForm dispatch={dispatch} />);
+        setCurrentConsoleInput(
+          <RegisterForm
+            dispatch={dispatch}
+            ExitForm={() => setDefaultInput()}
+          />
+        );
         break;
 
       case "just save command":

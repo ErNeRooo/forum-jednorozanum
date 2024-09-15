@@ -12,4 +12,7 @@ export type PromptAnswer =
   | "login completed"
   | "wrong password"
   | "user not found"
-  | "account creating error";
+  | "account creating error"
+  | "name already in use"
+  | "email already in use"
+  | "account log in error";

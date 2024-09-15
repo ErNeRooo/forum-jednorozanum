@@ -4,7 +4,7 @@ import { Action } from "@/app/reducers/cmdInputReducer";
 import HideString from "@/app/utils/HideString";
 import AddAccountToDatabase from "@/app/utils/AddAccountToDatabase";
 
-const RegisterForm = ({ dispatch }: Props) => {
+const RegisterForm = ({ dispatch, ExitForm }: Props) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -80,26 +80,45 @@ const RegisterForm = ({ dispatch }: Props) => {
       target.value = "";
     } else {
       if (target.value === password) {
-        AddAccountToDatabase(name, email, password)
-          .then(() => {
-            setIsInputVisible(false);
+        AddAccountToDatabase(name, email, password).then(
+          ({ isCreated, errorMessage }) => {
+            if (isCreated) {
+              setIsInputVisible(false);
 
-            dispatch({
-              type: "just save command",
-              value: HideString(target.value),
-              consoleTitle: inputText,
-            });
-          })
-          .catch((error) => {
-            dispatch({
-              type: "account creating error",
-              value: HideString(target.value),
-              consoleTitle: inputText,
-            });
-            console.log(error);
+              dispatch({
+                type: "just save command",
+                value: HideString(target.value),
+                consoleTitle: inputText,
+              });
+            } else if (errorMessage === "name already in use") {
+              dispatch({
+                type: "name already in use",
+                value: HideString(target.value),
+                consoleTitle: inputText,
+              });
+              ExitForm();
+            } else if (
+              errorMessage === "Firebase: Error (auth/email-already-in-use)."
+            ) {
+              dispatch({
+                type: "email already in use",
+                value: HideString(target.value),
+                consoleTitle: inputText,
+              });
+              ExitForm();
+            } else {
+              dispatch({
+                type: "account creating error",
+                value: HideString(target.value),
+                consoleTitle: inputText,
+              });
+              console.log(errorMessage);
+              ExitForm();
+            }
 
             target.value = "";
-          });
+          }
+        );
       } else {
         dispatch({
           type: "passwords does not match",
@@ -125,6 +144,7 @@ const RegisterForm = ({ dispatch }: Props) => {
 
 interface Props {
   dispatch: React.Dispatch<Action>;
+  ExitForm: () => void;
 }
 
 export default RegisterForm;

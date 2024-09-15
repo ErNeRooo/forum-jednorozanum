@@ -78,6 +78,24 @@ const CmdInputReducer = (
     </span>
   );
 
+  const NameAlreadyInUseErrorMessage = () => (
+    <span key={state.length + 1} className={styles.errorMessage}>
+      {`That name is already in use.`}
+    </span>
+  );
+
+  const EmailAlreadyInUseErrorMessage = () => (
+    <span key={state.length + 1} className={styles.errorMessage}>
+      {`That email is already in use.`}
+    </span>
+  );
+
+  const AccountLogInErrorMessage = () => (
+    <span key={state.length + 1} className={styles.errorMessage}>
+      {`Account log in error.`}
+    </span>
+  );
+
   const LoginCompletedMessage = () => (
     <span
       key={state.length + 1}
@@ -110,6 +128,12 @@ const CmdInputReducer = (
       return [...state, currentInput, UserNotFoundErrorMessage()];
     case "account creating error":
       return [...state, currentInput, AccountCreatingErrorMessage()];
+    case "name already in use":
+      return [...state, currentInput, NameAlreadyInUseErrorMessage()];
+    case "email already in use":
+      return [...state, currentInput, EmailAlreadyInUseErrorMessage()];
+    case "account log in error":
+      return [...state, currentInput, AccountLogInErrorMessage()];
     case "login completed":
       return [...state, LoginCompletedMessage()];
     case "just save command":
