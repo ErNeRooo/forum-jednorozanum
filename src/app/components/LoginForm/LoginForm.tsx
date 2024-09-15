@@ -1,7 +1,6 @@
 import { useState, useContext } from "react";
 import ConsoleInput from "../ConsoleInput/ConsoleInput";
 import { Action } from "@/app/reducers/cmdInputReducer";
-import UserCredentialsContext from "@/app/context/UserCredentialsContext";
 import FindUserNameByEmail from "@/app/utils/FindUserNameByEmail";
 import useLogInAccount from "@/app/hooks/useLogInAccount";
 import HideString from "@/app/utils/HideString";
@@ -10,7 +9,6 @@ const LoginForm = ({ dispatch }: Props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isInputVisible, setIsInputVisible] = useState(true);
-  const { userCredentials } = useContext(UserCredentialsContext);
   const { LogIn } = useLogInAccount();
 
   const handleOnEnter = (e: React.KeyboardEvent<HTMLInputElement>): void => {
@@ -35,6 +33,8 @@ const LoginForm = ({ dispatch }: Props) => {
           consoleTitle: "Enter your email: ",
         });
       }
+
+      target.value = "";
     } else if (password === "") {
       setPassword(target.value);
 
@@ -78,10 +78,10 @@ const LoginForm = ({ dispatch }: Props) => {
           setEmail("");
           setPassword("");
         }
+
+        target.value = "";
       });
     }
-
-    target.value = "";
   };
 
   return (

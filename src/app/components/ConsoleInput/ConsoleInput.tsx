@@ -7,7 +7,6 @@ const ConsoleInput = ({ handler, consoleText, type }: Props) => {
 
   useEffect(() => {
     if (inputRef.current) {
-      console.log(typeof inputRef.current);
       inputRef.current.focus();
     }
   }, []);
