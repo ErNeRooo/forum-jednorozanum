@@ -12,12 +12,12 @@ const RegisterForm = ({ dispatch }: Props) => {
   const [inputText, setInputText] = useState("Enter your name: ");
   const [inputType, setInputType] = useState("text");
 
+  const [isInputVisible, setIsInputVisible] = useState(true);
+
   const handleOnEnter = (e: React.KeyboardEvent<HTMLInputElement>): void => {
     if (e.key !== "Enter") return;
 
     const target = e.target as HTMLInputElement;
-
-    console.log("bajo jajo");
 
     if (name === "") {
       if (target.value.length >= 4 && target.value.length <= 24) {
@@ -37,6 +37,7 @@ const RegisterForm = ({ dispatch }: Props) => {
           consoleTitle: inputText,
         });
       }
+      target.value = "";
     } else if (email === "") {
       const emailRegex: RegExp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -57,6 +58,7 @@ const RegisterForm = ({ dispatch }: Props) => {
           consoleTitle: inputText,
         });
       }
+      target.value = "";
     } else if (password === "") {
       if (target.value.length >= 8) {
         setPassword(target.value);
@@ -75,33 +77,49 @@ const RegisterForm = ({ dispatch }: Props) => {
           consoleTitle: inputText,
         });
       }
+      target.value = "";
     } else {
       if (target.value === password) {
-        dispatch({
-          type: "just save command",
-          value: HideString(target.value),
-          consoleTitle: inputText,
-        });
+        AddAccountToDatabase(name, email, password)
+          .then(() => {
+            setIsInputVisible(false);
 
-        AddAccountToDatabase(name, email, password);
+            dispatch({
+              type: "just save command",
+              value: HideString(target.value),
+              consoleTitle: inputText,
+            });
+          })
+          .catch((error) => {
+            dispatch({
+              type: "account creating error",
+              value: HideString(target.value),
+              consoleTitle: inputText,
+            });
+            console.log(error);
+
+            target.value = "";
+          });
       } else {
         dispatch({
           type: "passwords does not match",
           value: HideString(target.value),
           consoleTitle: inputText,
         });
+
+        target.value = "";
       }
     }
-
-    target.value = "";
   };
 
   return (
-    <ConsoleInput
-      handler={handleOnEnter}
-      consoleText={inputText}
-      type={inputType}
-    ></ConsoleInput>
+    isInputVisible && (
+      <ConsoleInput
+        handler={handleOnEnter}
+        consoleText={inputText}
+        type={inputType}
+      ></ConsoleInput>
+    )
   );
 };
 

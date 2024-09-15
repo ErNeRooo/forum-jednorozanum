@@ -72,6 +72,12 @@ const CmdInputReducer = (
     </span>
   );
 
+  const AccountCreatingErrorMessage = () => (
+    <span key={state.length + 1} className={styles.errorMessage}>
+      {`Account creating error.`}
+    </span>
+  );
+
   const LoginCompletedMessage = () => (
     <span
       key={state.length + 1}
@@ -102,6 +108,8 @@ const CmdInputReducer = (
       return [...state, currentInput, WrongPasswordErrorMessage()];
     case "user not found":
       return [...state, currentInput, UserNotFoundErrorMessage()];
+    case "account creating error":
+      return [...state, currentInput, AccountCreatingErrorMessage()];
     case "login completed":
       return [...state, LoginCompletedMessage()];
     case "just save command":

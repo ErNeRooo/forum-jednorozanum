@@ -11,4 +11,5 @@ export type PromptAnswer =
   | "not valid email format"
   | "login completed"
   | "wrong password"
-  | "user not found";
+  | "user not found"
+  | "account creating error";
