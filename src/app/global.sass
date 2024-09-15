@@ -1,3 +1,17 @@
+@mixin scrollbar()
+    &::-webkit-scrollbar 
+        width: 0.3rem
+  
+    &::-webkit-scrollbar-thumb 
+        border: 1px solid #54e31b // Set the color of the scrollbar thumb
+        border-radius: 10px // Add rounding for a smoother look
+
+    &::-webkit-scrollbar-thumb:hover
+
+  
+    
 body
     background-color: black
     margin: 0
+    @include scrollbar()
+    
