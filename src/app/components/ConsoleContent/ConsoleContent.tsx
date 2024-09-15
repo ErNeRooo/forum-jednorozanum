@@ -88,6 +88,14 @@ const ConsoleContent = () => {
         });
         setCurrentConsoleInput(<RegisterForm dispatch={dispatch} />);
         break;
+
+      case "just save command":
+        dispatch({
+          type: "just save command",
+          value: target.value,
+          consoleTitle: "PS C:\\forum-jednorozanum>",
+        });
+        break;
     }
 
     target.value = "";
@@ -101,18 +109,25 @@ const ConsoleContent = () => {
 };
 
 const pickAnswerToPrompt = (value: string): PromptAnswer => {
+  if (value === "") {
+    return "just save command";
+  }
+
   const { program, command } = SplitPrompt(value);
 
-  if ("forum" !== program) {
+  if (program !== "forum") {
     return "program not found";
-  } else if (command === "help") {
-    return "help";
-  } else if (command === "login") {
-    return "login";
-  } else if (command === "register") {
-    return "register";
-  } else {
-    return "command not found";
+  }
+
+  switch (command) {
+    case "help":
+      return "help";
+    case "login":
+      return "login";
+    case "register":
+      return "register";
+    default:
+      return "command not found";
   }
 };
 
