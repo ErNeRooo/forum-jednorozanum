@@ -8,4 +8,7 @@ export type PromptAnswer =
   | "wrong login length"
   | "to weak password"
   | "passwords does not match"
-  | "not valid email format";
+  | "not valid email format"
+  | "login completed"
+  | "wrong password"
+  | "user not found";

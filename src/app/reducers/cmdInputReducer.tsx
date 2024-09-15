@@ -60,6 +60,25 @@ const CmdInputReducer = (
     </span>
   );
 
+  const WrongPasswordErrorMessage = () => (
+    <span key={state.length + 1} className={styles.errorMessage}>
+      {`Wrong password.`}
+    </span>
+  );
+
+  const UserNotFoundErrorMessage = () => (
+    <span key={state.length + 1} className={styles.errorMessage}>
+      {`User not found.`}
+    </span>
+  );
+
+  const LoginCompletedMessage = () => (
+    <span
+      key={state.length + 1}
+      className={styles.response}
+    >{`Welcome back ${value}!`}</span>
+  );
+
   const currentInput: ReactElement = (
     <span key={state.length}>{`${consoleTitle} ${fullPrompt}`}</span>
   );
@@ -79,6 +98,12 @@ const CmdInputReducer = (
       return [...state, currentInput, PasswordsDoesNotMatchErrorMessage()];
     case "not valid email format":
       return [...state, currentInput, NotValidEmailFormatErrorMessage()];
+    case "wrong password":
+      return [...state, currentInput, WrongPasswordErrorMessage()];
+    case "user not found":
+      return [...state, currentInput, UserNotFoundErrorMessage()];
+    case "login completed":
+      return [...state, LoginCompletedMessage()];
     case "just save command":
       return [...state, currentInput];
     default:
