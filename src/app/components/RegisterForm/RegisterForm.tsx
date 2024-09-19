@@ -3,6 +3,7 @@ import ConsoleInput from "../ConsoleInput/ConsoleInput";
 import { Action } from "@/app/reducers/cmdInputReducer";
 import HideString from "@/app/utils/HideString";
 import AddAccountToDatabase from "@/app/utils/AddAccountToDatabase";
+import { useRouter } from "next/navigation";
 
 const RegisterForm = ({ dispatch, ExitForm }: Props) => {
   const [name, setName] = useState("");
@@ -13,6 +14,8 @@ const RegisterForm = ({ dispatch, ExitForm }: Props) => {
   const [inputType, setInputType] = useState("text");
 
   const [isInputVisible, setIsInputVisible] = useState(true);
+
+  const router = useRouter();
 
   const handleOnEnter = (e: React.KeyboardEvent<HTMLInputElement>): void => {
     if (e.key !== "Enter") return;
@@ -90,6 +93,8 @@ const RegisterForm = ({ dispatch, ExitForm }: Props) => {
                 value: HideString(target.value),
                 consoleTitle: inputText,
               });
+
+              router.push("/ExplorePage");
             } else if (errorMessage === "name already in use") {
               dispatch({
                 type: "name already in use",

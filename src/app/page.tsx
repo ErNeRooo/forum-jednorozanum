@@ -1,6 +1,5 @@
 "use client";
 import HomePage from "./HomePage/HomePage";
-import "./global.sass";
 import { firebaseConfig } from "./firebaseConfig";
 import firebase from "firebase/compat/app";
 import UserCredentialsContext from "./context/UserCredentialsContext";

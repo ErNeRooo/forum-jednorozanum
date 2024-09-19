@@ -1,15 +1,17 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
 import ConsoleInput from "../ConsoleInput/ConsoleInput";
 import { Action } from "@/app/reducers/cmdInputReducer";
 import FindUserNameByEmail from "@/app/utils/FindUserNameByEmail";
 import useLogInAccount from "@/app/hooks/useLogInAccount";
 import HideString from "@/app/utils/HideString";
+import { useRouter } from "next/navigation";
 
 const LoginForm = ({ dispatch, ExitForm }: Props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isInputVisible, setIsInputVisible] = useState(true);
   const { LogIn } = useLogInAccount();
+  const router = useRouter();
 
   const handleOnEnter = (e: React.KeyboardEvent<HTMLInputElement>): void => {
     if (e.key !== "Enter") return;
@@ -55,6 +57,12 @@ const LoginForm = ({ dispatch, ExitForm }: Props) => {
               consoleTitle: "Enter your password: ",
             });
           });
+
+          setTimeout(() => {
+            console.log("redirecting...");
+
+            router.push("/ExplorePage");
+          }, 3000);
         } else {
           console.log(errorMessage);
 

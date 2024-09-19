@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Handjet } from "next/font/google";
+import "./global.sass";
 
 const inter = Handjet({
   subsets: ["latin"],
