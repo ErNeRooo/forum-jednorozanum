@@ -1,7 +1,5 @@
 "use client";
-import HomePage from "./HomePage/HomePage";
-import { firebaseConfig } from "./firebaseConfig";
-import firebase from "firebase/compat/app";
+import AuthPage from "./components/AuthPage/AuthPage";
 import UserCredentialsContext from "./context/UserCredentialsContext";
 import { useState } from "react";
 import { UserCredential } from "firebase/auth";
@@ -15,7 +13,7 @@ export default function Home() {
     <UserCredentialsContext.Provider
       value={{ userCredentials, setUserCredentials }}
     >
-      <HomePage />
+      <AuthPage />
     </UserCredentialsContext.Provider>
   );
 }
