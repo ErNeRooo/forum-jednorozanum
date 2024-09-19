@@ -6,6 +6,7 @@ import {
   ReactElement,
   useEffect,
   useReducer,
+  useRef,
   useState,
 } from "react";
 import cmdInputReducer from "@/app/reducers/cmdInputReducer";
@@ -30,6 +31,7 @@ const ConsoleContent = () => {
   const [currentConsoleInput, setCurrentConsoleInput] = useState<JSX.Element>(
     <span>{"PS C:\\forum-jednorozanum> "}</span>
   );
+  const ScrollDiv = useRef(null);
 
   const setDefaultInput = () => {
     setCurrentConsoleInput(
@@ -41,9 +43,19 @@ const ConsoleContent = () => {
     );
   };
 
+  const scrollToBottom = () => {
+    if (!ScrollDiv.current) return;
+    const scroll: HTMLDivElement = ScrollDiv.current as HTMLDivElement;
+    scroll.scrollIntoView({ behavior: "smooth" });
+  };
+
   useEffect(() => {
     setDefaultInput();
   }, []);
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [consoleHistory]);
 
   const handleOnEnter = (e: React.KeyboardEvent<HTMLInputElement>): void => {
     if (e.key !== "Enter") return;
@@ -115,6 +127,7 @@ const ConsoleContent = () => {
     <div className={styles.ConsoleContent}>
       {consoleHistory}
       {currentConsoleInput}
+      <div className={styles.scroll} ref={ScrollDiv}></div>
     </div>
   );
 };
