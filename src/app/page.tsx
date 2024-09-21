@@ -1,5 +1,5 @@
 "use client";
-import AuthPage from "./pages/AuthPage/AuthPage";
+import AuthPage from "./componentPages/AuthPage/AuthPage";
 import UserCredentialsContext from "./context/UserCredentialsContext";
 import { useState } from "react";
 import { UserCredential } from "firebase/auth";

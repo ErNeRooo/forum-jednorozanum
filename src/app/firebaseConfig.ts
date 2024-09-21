@@ -21,9 +21,10 @@ export const firebaseConfig = {
 
 // Initialize Firebase
 export const app = initializeApp(firebaseConfig);
-export const analytics = getAnalytics(app);
+export const analytics =
+  app.name && typeof window !== "undefined" ? getAnalytics(app) : null;
 export const fireDb = getFirestore(app);
 export const auth = getAuth(app);
 
-connectAuthEmulator(auth, "http://localhost:9099");
-connectFirestoreEmulator(fireDb, "localhost", 8080);
+//connectAuthEmulator(auth, "http://localhost:9099");
+//connectFirestoreEmulator(fireDb, "localhost", 8080);

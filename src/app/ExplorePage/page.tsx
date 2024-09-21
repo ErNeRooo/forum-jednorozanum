@@ -1,8 +1,8 @@
 "use client";
 import { getAuth, User } from "firebase/auth";
 import { app } from "../firebaseConfig";
-import ExplorePage from "../pages/ExplorePage/ExplorePage";
-import NotLoggedInPage from "../pages/NotLoggedInPage/NotLoggedInPage";
+import ExplorePage from "../componentPages/ExplorePage/ExplorePage";
+import NotLoggedInPage from "../componentPages/NotLoggedInPage/NotLoggedInPage";
 
 const page = () => {
   const auth = getAuth(app);
