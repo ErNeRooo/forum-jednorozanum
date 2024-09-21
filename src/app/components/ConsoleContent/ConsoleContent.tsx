@@ -1,14 +1,7 @@
 "use client";
 import styles from "./ConsoleContent.module.sass";
 import ConsoleInput from "../ConsoleInput/ConsoleInput";
-import {
-  BaseSyntheticEvent,
-  ReactElement,
-  useEffect,
-  useReducer,
-  useRef,
-  useState,
-} from "react";
+import { useEffect, useReducer, useRef, useState } from "react";
 import cmdInputReducer from "@/app/reducers/cmdInputReducer";
 import HelpMessage from "../HelpMessage/HelpMessage";
 import LoginForm from "../LoginForm/LoginForm";
