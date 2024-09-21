@@ -142,6 +142,7 @@ const RegisterForm = ({ dispatch, ExitForm }: Props) => {
         handler={handleOnEnter}
         consoleText={inputText}
         type={inputType}
+        isArrowsActive={false}
       ></ConsoleInput>
     )
   );

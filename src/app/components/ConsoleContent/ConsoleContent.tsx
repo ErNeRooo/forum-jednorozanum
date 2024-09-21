@@ -39,6 +39,7 @@ const ConsoleContent = () => {
         handler={handleOnEnter}
         consoleText={"PS C:\\forum-jednorozanum> "}
         type="text"
+        isArrowsActive={true}
       />
     );
   };

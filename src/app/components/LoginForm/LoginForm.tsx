@@ -106,6 +106,7 @@ const LoginForm = ({ dispatch, ExitForm }: Props) => {
           email === "" ? "Enter your email: " : "Enter your password: "
         }
         type={email === "" ? "text" : "password"}
+        isArrowsActive={false}
       ></ConsoleInput>
     )
   );
