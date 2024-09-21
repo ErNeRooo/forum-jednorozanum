@@ -1,7 +1,7 @@
 import { useState } from "react";
-import CategoryPanel from "../CategoryPanel/CategoryPanel";
-import PostsBar from "../PostsBar/PostsBar";
-import PostSearchPanel from "../PostSearchPanel/PostSearchPanel";
+import CategoryPanel from "../../components/CategoryPanel/CategoryPanel";
+import PostsBar from "../../components/PostsBar/PostsBar";
+import PostSearchPanel from "../../components/PostSearchPanel/PostSearchPanel";
 import styles from "./ExplorePage.module.sass";
 
 const ExplorePage = () => {
