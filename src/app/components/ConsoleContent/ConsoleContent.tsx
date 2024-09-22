@@ -6,8 +6,7 @@ import cmdInputReducer from "@/app/reducers/cmdInputReducer";
 import HelpMessage from "../HelpMessage/HelpMessage";
 import LoginForm from "../LoginForm/LoginForm";
 import RegisterForm from "../RegisterForm/RegisterForm";
-import { SplitPrompt } from "@/app/utils/SplitPrompt";
-import { PromptAnswer } from "@/app/types/PromptAnswer";
+import PickPromptAnswer from "@/app/utils/PickPromptAnswer";
 
 const ConsoleContent = () => {
   const [consoleHistory, dispatch] = useReducer(cmdInputReducer, [
@@ -45,6 +44,7 @@ const ConsoleContent = () => {
 
   useEffect(() => {
     setDefaultInput();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -54,7 +54,7 @@ const ConsoleContent = () => {
   const handleOnEnter = (e: React.KeyboardEvent<HTMLInputElement>): void => {
     if (e.key !== "Enter") return;
     const target = e.target as HTMLInputElement;
-    const answer = pickAnswerToPrompt(target.value);
+    const answer = PickPromptAnswer(target.value);
 
     switch (answer) {
       case "program not found":
@@ -113,6 +113,14 @@ const ConsoleContent = () => {
           consoleTitle: "PS C:\\forum-jednorozanum>",
         });
         break;
+
+      case "swider easter egg command":
+        dispatch({
+          type: "swider easter egg command",
+          value: target.value,
+          consoleTitle: "PS C:\\forum-jednorozanum>",
+        });
+        break;
     }
 
     target.value = "";
@@ -124,29 +132,6 @@ const ConsoleContent = () => {
       <div className={styles.scroll} ref={ScrollDiv}></div>
     </div>
   );
-};
-
-const pickAnswerToPrompt = (value: string): PromptAnswer => {
-  if (value === "") {
-    return "just save command";
-  }
-
-  const { program, command } = SplitPrompt(value);
-
-  if (program !== "forum") {
-    return "program not found";
-  }
-
-  switch (command) {
-    case "help":
-      return "help";
-    case "login":
-      return "login";
-    case "register":
-      return "register";
-    default:
-      return "command not found";
-  }
 };
 
 export default ConsoleContent;

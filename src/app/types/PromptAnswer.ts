@@ -15,4 +15,5 @@ export type PromptAnswer =
   | "account creating error"
   | "name already in use"
   | "email already in use"
-  | "account log in error";
+  | "account log in error"
+  | "swider easter egg command";

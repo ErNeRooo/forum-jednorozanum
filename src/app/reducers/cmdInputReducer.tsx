@@ -103,6 +103,13 @@ const CmdInputReducer = (
     >{`Welcome back ${value}!`}</span>
   );
 
+  const SwiderEasterEggMessage = () => (
+    <span
+      key={state.length + 1}
+      className={styles.response}
+    >{`Siema, nazywam się Piotr Świderski, zamieszkuję ulicę długą w gminnej miejscowość Jednorożec, znajdującej się w powiecie przasnyskim w województwie Mazowiecki. Uczęszczam do 1 klasy LO z kierunkiem polonistycznym. Kocham kobiety, ale one mnie nie. Kiedy się denerwuję pocą mi się nogi i śmierdzę wtedy jak ryba. Jestem popularny na lokalnej komendzie.`}</span>
+  );
+
   const currentInput: ReactElement = (
     <span key={state.length}>{`${consoleTitle} ${fullPrompt}`}</span>
   );
@@ -136,6 +143,8 @@ const CmdInputReducer = (
       return [...state, currentInput, AccountLogInErrorMessage()];
     case "login completed":
       return [...state, LoginCompletedMessage()];
+    case "swider easter egg command":
+      return [...state, currentInput, SwiderEasterEggMessage()];
     case "just save command":
       return [...state, currentInput];
     default:
