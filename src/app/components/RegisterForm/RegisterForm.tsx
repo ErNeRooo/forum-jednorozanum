@@ -94,7 +94,7 @@ const RegisterForm = ({ dispatch, ExitForm }: Props) => {
                 consoleTitle: inputText,
               });
 
-              router.push("/ExplorePage");
+              router.push("/explore");
             } else if (errorMessage === "name already in use") {
               dispatch({
                 type: "name already in use",

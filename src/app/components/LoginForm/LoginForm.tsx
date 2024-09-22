@@ -61,7 +61,7 @@ const LoginForm = ({ dispatch, ExitForm }: Props) => {
           setTimeout(() => {
             console.log("redirecting...");
 
-            router.push("/ExplorePage");
+            router.push("/explore");
           }, 3000);
         } else {
           console.log(errorMessage);

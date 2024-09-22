@@ -4,7 +4,7 @@ import { app } from "../firebaseConfig";
 import ExplorePage from "../componentPages/ExplorePage/ExplorePage";
 import NotLoggedInPage from "../componentPages/NotLoggedInPage/NotLoggedInPage";
 
-const page = () => {
+const Explore = () => {
   const auth = getAuth(app);
   const user: User | null = auth.currentUser;
 
@@ -12,4 +12,4 @@ const page = () => {
   else return <NotLoggedInPage />;
 };
 
-export default page;
+export default Explore;
