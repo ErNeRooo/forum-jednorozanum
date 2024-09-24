@@ -6,12 +6,13 @@ import {
 } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 import CheckIfNameIsOccupied from "./CheckIfNameIsOccupied";
+import isCreated from "../types/isCreated";
 
 const AddAccountToDatabase = async (
   name: string,
   email: string,
   password: string
-): Promise<isCreatedObjectTypes> => {
+): Promise<isCreated> => {
   const nameIsOccupied = await CheckIfNameIsOccupied(name).then(
     (nameIsOccupied) => {
       if (nameIsOccupied) {
@@ -45,10 +46,5 @@ const AddAccountToDatabase = async (
 
   return nameIsOccupied ? nameIsOccupied : userCredential;
 };
-
-interface isCreatedObjectTypes {
-  isCreated: boolean;
-  errorMessage: string | null;
-}
 
 export default AddAccountToDatabase;
