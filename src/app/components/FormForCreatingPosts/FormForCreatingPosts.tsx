@@ -2,11 +2,15 @@
 import { useState } from "react";
 import { getAuth, User } from "firebase/auth";
 import styles from "./FormForCreatingPosts.module.sass";
-import CreatePost from "@/app/utils/CreatePost";
+import AddAccountToDatabase from "@/app/utils/AddAccountToDatabase";
 import { app } from "@/app/firebaseConfig";
 import FindAccountByUid from "@/app/utils/FindAccountByUid";
 import CreatePostErrorPopup from "../CreatePostErrorPopup/CreatePostErrorPopup";
 import Loader from "../Loader/Loader";
+import FormatDate from "@/app/utils/FormatDate";
+import PostTypes from "@/app/types/PostTypes";
+import AddPostToDatabase from "@/app/utils/AddPostToDatabase";
+import CreatePost from "@/app/utils/CreatePost";
 
 const FormForCreatingPosts = ({ setIsFormVisible, currentCategory }: Props) => {
   const auth = getAuth(app);
@@ -19,46 +23,16 @@ const FormForCreatingPosts = ({ setIsFormVisible, currentCategory }: Props) => {
   const handleCreatePostOnClick = (): void => {
     if (!text || user === null) return;
 
+    CreatePost(
+      user.uid,
+      text,
+      currentCategory,
+      setIsFormVisible,
+      setIsLoading,
+      setIsCreatePostErrorPopupVisible
+    );
+
     setIsLoading(true);
-
-    FindAccountByUid(user.uid).then((account) => {
-      const date = new Date();
-      const year = date.getFullYear();
-      const month = date.getMonth() + 1;
-      const day = date.getDate();
-      const hours = date.getHours();
-      const minutes = date.getMinutes();
-
-      const formatedDate = `${day < 10 ? `0${day}` : day}.${
-        month < 10 ? `0${month}` : month
-      }.${year}`;
-      const formatedHour = `${hours < 10 ? `0${hours}` : hours}:${
-        minutes < 10 ? `0${minutes}` : minutes
-      }`;
-
-      CreatePost({
-        author: account.name,
-        date: formatedDate,
-        hour: formatedHour,
-        text: text,
-        category: currentCategory,
-        image: "",
-        comments: [],
-      })
-        .then(() => {
-          setIsFormVisible(false);
-          setIsLoading(false);
-        })
-        .catch((error) => {
-          setIsLoading(false);
-          setIsCreatePostErrorPopupVisible(true);
-          console.error(error);
-
-          setTimeout(() => {
-            setIsCreatePostErrorPopupVisible(false);
-          }, 5000);
-        });
-    });
   };
   const handleCancelOnClick = (): void => {
     setIsFormVisible(false);

@@ -32,7 +32,7 @@ const ExplorePage = () => {
         </h1>
         <CreatePostButton setIsFormVisible={setIsCreatePostFormVisible} />
       </section>
-      <PostsBar />
+      <PostsBar category={currentCategory} />
     </div>
   );
 };

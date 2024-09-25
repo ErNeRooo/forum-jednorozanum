@@ -1,32 +1,66 @@
-import { fireDb } from "../firebaseConfig";
-import { collection, addDoc } from "firebase/firestore";
 import PostTypes from "../types/PostTypes";
-import isCreated from "../types/isCreated";
-import { Exception } from "sass";
+import AddPostToDatabase from "./AddPostToDatabase";
+import styles from "./CreatePost.module.sass";
+import FindAccountByUid from "./FindAccountByUid";
+import FormatDate from "./FormatDate";
 
-const CreatePost = async (post: PostTypes): Promise<isCreated> => {
-  return await addDoc(collection(fireDb, "posts"), {
-    author: post.author,
-    date: post.date,
-    hour: post.hour,
-    text: post.text,
-    category: post.category,
-    image: post.image,
-    comments: post.comments,
-  })
-    .then(() => {
-      return {
-        isCreated: true,
-        errorMessage: null,
-      };
-    })
-    .catch((error) => {
-      console.error(error);
-      return {
-        isCreated: false,
-        errorMessage: error.errorMessage,
-      };
-    });
+const CreatePost = (
+  userUid: string,
+  text: string,
+  currentCategory: string,
+  setIsFormVisible: React.Dispatch<React.SetStateAction<boolean>>,
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
+  setIsCreatePostErrorPopupVisible: React.Dispatch<
+    React.SetStateAction<boolean>
+  >
+) => {
+  FindAccountByUid(userUid).then((account) => {
+    const date = new Date();
+    const {
+      year,
+      month,
+      day,
+      offsetUTC,
+      hours,
+      minutes,
+      seconds,
+      miliseconds,
+    } = FormatDate(date);
+
+    const post: PostTypes = {
+      // date
+      year: year,
+      month: month,
+      day: day,
+      offsetUTC: offsetUTC,
+      // hour
+      hours: hours,
+      minutes: minutes,
+      seconds: seconds,
+      miliseconds: miliseconds,
+      // post
+      author: account.name,
+      text: text,
+      category: currentCategory,
+      image: "",
+      comments: [],
+    };
+
+    AddPostToDatabase(post)
+      .then(() => {
+        setIsFormVisible(false);
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        setIsLoading(false);
+        setIsCreatePostErrorPopupVisible(true);
+        console.error(error);
+
+        setTimeout(() => {
+          setIsCreatePostErrorPopupVisible(false);
+        }, 5000);
+      });
+  });
 };
 
 export default CreatePost;

@@ -3,9 +3,18 @@ import CommentTypes from "./CommentTypes";
 export default PostTypes;
 
 interface PostTypes {
+  //date
+  year: string;
+  month: string;
+  day: string;
+  offsetUTC: string;
+  //hour
+  hours: string;
+  minutes: string;
+  seconds: string;
+  miliseconds: string;
+  //post
   author: string;
-  date: string;
-  hour: string;
   text: string;
   category: string;
   image: string;

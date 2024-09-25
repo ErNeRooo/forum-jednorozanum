@@ -4,12 +4,28 @@ import PostTypes from "@/app/types/PostTypes";
 import Comment from "../Comment/Comment";
 
 const Post = ({
-  post: { id, author, date, hour, text, image, comments },
+  post: {
+    year,
+    month,
+    day,
+    offsetUTC,
+    hours,
+    minutes,
+    seconds,
+    miliseconds,
+    author,
+    text,
+    category,
+    image,
+    comments,
+  },
 }: Props) => {
   return (
     <>
       <div className={styles.Post}>
-        <div className={styles.header}>{`${author} | ${hour} | ${date}`} </div>
+        <div className={styles.header}>
+          {`${author} | ${hours}:${minutes} UTC ${offsetUTC} | ${day}.${month}.${year}`}
+        </div>
         <div className={styles.content}>
           {image && (
             <div className={styles.image}>
