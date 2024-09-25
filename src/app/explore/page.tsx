@@ -1,33 +1,29 @@
-"use client"; // Client-side only component
+"use client";
 import { useEffect, useState } from "react";
 import { getAuth, onAuthStateChanged, User } from "firebase/auth";
-import { app } from "../firebaseConfig"; // Assuming this is your Firebase app instance
+import { app } from "../firebaseConfig";
 import ExplorePage from "../componentPages/ExplorePage/ExplorePage";
 import NotLoggedInPage from "../componentPages/NotLoggedInPage/NotLoggedInPage";
-import Loader from "../components/Loader/Loader";
+import PageLoading from "../components/PageLoading/PageLoading";
 
 const Explore = () => {
-  const [user, setUser] = useState<User | null>(null); // Track auth state
-  const [loading, setLoading] = useState(true); // Track loading state
-  const auth = getAuth(app); // Initialize Firebase auth
+  const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
+  const auth = getAuth(app);
 
-  // Set up the listener for authentication state changes
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setUser(user); // Update the user state when the auth state changes
-      setLoading(false); // Set loading to false once auth state is determined
+      setUser(user);
+      setLoading(false);
     });
 
-    // Clean up the listener when the component unmounts
     return () => unsubscribe();
   }, [auth]);
 
-  // Show loading state while waiting for auth check
   if (loading) {
-    return <Loader />;
+    return <PageLoading />;
   }
 
-  // Render pages based on user authentication state
   if (user) {
     console.log(user);
     return <ExplorePage />;

@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { CSSProperties, useState } from "react";
 import { getAuth, User } from "firebase/auth";
 import styles from "./FormForCreatingPosts.module.sass";
 import AddAccountToDatabase from "@/app/utils/AddAccountToDatabase";
@@ -43,6 +43,13 @@ const FormForCreatingPosts = ({
     setIsFormVisible(false);
   };
 
+  const loaderStyle: CSSProperties = {
+    position: "fixed",
+    width: "4rem",
+    top: "calc(50% - 2rem)",
+    left: "calc(50% - 2rem)",
+  };
+
   return (
     <div className={styles.background}>
       <div className={styles.FormForCreatingPosts}>
@@ -61,7 +68,7 @@ const FormForCreatingPosts = ({
           </div>
         </section>
       </div>
-      {isLoading && <Loader />}
+      {isLoading && <Loader style={loaderStyle} />}
       {isCreatePostErrorPopupVisible && <CreatePostErrorPopup />}
     </div>
   );

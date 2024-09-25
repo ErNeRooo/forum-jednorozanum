@@ -1,13 +1,20 @@
 "use client";
-import { BaseSyntheticEvent } from "react";
+import { BaseSyntheticEvent, useState } from "react";
 import styles from "./NotLoggedInPage.module.sass";
 import { useRouter } from "next/navigation";
+import PageLoading from "@/app/components/PageLoading/PageLoading";
 
 const NotLoggedInPage = () => {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const router = useRouter();
-  const handleOnClick = (e: BaseSyntheticEvent): void => {
+  const handleOnClick = (): void => {
+    setIsLoading(true);
     router.replace("/");
   };
+
+  if (isLoading) {
+    return <PageLoading />;
+  }
 
   return (
     <div className={styles.NotLoggedInPage}>
