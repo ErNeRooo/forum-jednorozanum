@@ -26,5 +26,5 @@ export const analytics =
 export const fireDb = getFirestore(app);
 export const auth = getAuth(app);
 
-connectAuthEmulator(auth, "http://localhost:9099");
-connectFirestoreEmulator(fireDb, "localhost", 8080);
+//connectAuthEmulator(auth, "http://localhost:9099");
+//connectFirestoreEmulator(fireDb, "localhost", 8080);

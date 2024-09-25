@@ -11,7 +11,7 @@ import PostTypes from "@/app/types/PostTypes";
 const ExplorePage = () => {
   const [searchPhrase, setSearchPhrase] = useState<string>("");
   const [posts, setPosts] = useState<PostTypes[]>([]);
-  const [currentCategory, setCurrentCategory] = useState<string>("Home");
+  const [currentCategory, setCurrentCategory] = useState<string>("All");
   const [isCreatePostFormVisible, setIsCreatePostFormVisible] =
     useState<boolean>(false);
 

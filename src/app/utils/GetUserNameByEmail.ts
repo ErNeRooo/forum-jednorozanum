@@ -1,7 +1,7 @@
 import { fireDb } from "../firebaseConfig";
 import { collection, getDocs, query, where } from "firebase/firestore";
 
-const FindUserNameByEmail = async (email: string): Promise<string> => {
+const GetUserNameByEmail = async (email: string): Promise<string> => {
   const Query = query(
     collection(fireDb, "accounts"),
     where("email", "==", email)
@@ -11,4 +11,4 @@ const FindUserNameByEmail = async (email: string): Promise<string> => {
   });
 };
 
-export default FindUserNameByEmail;
+export default GetUserNameByEmail;

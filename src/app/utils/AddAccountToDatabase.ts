@@ -35,6 +35,7 @@ const AddAccountToDatabase = async (
           name: name,
           email: email,
           isBanned: false,
+          categories: ["All", "News", "Philosophy", "Earth", "Science", "War"],
         });
         return { isCreated: true, errorMessage: null };
       })

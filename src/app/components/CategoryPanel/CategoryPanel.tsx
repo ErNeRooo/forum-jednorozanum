@@ -1,25 +1,22 @@
+import { useEffect, useState } from "react";
+import { getAuth, User } from "firebase/auth";
 import styles from "./CategoryPanel.module.sass";
+import GetAccountCategories from "@/app/utils/GetAccountCategories";
 
 const CategoryPanel = ({ currentCategory, setCurrentCategory }: Props) => {
-  const mockCategories = [
-    "Home",
-    "Games",
-    "Music",
-    "Video",
-    "Pictures",
-    "Anime",
-    "Manga",
-    "Books",
-    "Movies",
-    "Software",
-    "Cars",
+  const user = getAuth().currentUser as User;
+  const [categories, setCategories] = useState<string[]>([]);
 
-    "Other",
-  ];
+  useEffect(() => {
+    GetAccountCategories(user.uid).then((Categories) => {
+      setCategories(Categories);
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className={styles.CategoryPanel}>
-      {mockCategories.map((category, index) => (
+      {categories.map((category, index) => (
         <div
           key={category}
           className={
@@ -27,7 +24,7 @@ const CategoryPanel = ({ currentCategory, setCurrentCategory }: Props) => {
           }
           onClick={() => setCurrentCategory(category)}
         >
-          {index !== mockCategories.length - 1 ? category + " / " : category}
+          {index !== categories.length - 1 ? category + " / " : category}
         </div>
       ))}
     </div>

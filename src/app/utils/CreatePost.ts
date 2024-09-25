@@ -1,7 +1,7 @@
 import PostTypes from "../types/PostTypes";
 import AddPostToDatabase from "./AddPostToDatabase";
 import styles from "./CreatePost.module.sass";
-import FindAccountByUid from "./FindAccountByUid";
+import GetAccountByUid from "./GetAccountByUid";
 import FormatDate from "./FormatDate";
 
 const CreatePost = (
@@ -15,7 +15,7 @@ const CreatePost = (
   >,
   setPosts: React.Dispatch<React.SetStateAction<PostTypes[]>>
 ) => {
-  FindAccountByUid(userUid).then((account) => {
+  GetAccountByUid(userUid).then((account) => {
     const date = new Date();
     const {
       year,

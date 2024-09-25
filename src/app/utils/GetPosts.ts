@@ -6,7 +6,7 @@ const GetPosts = async (category: string): Promise<PostTypes[]> => {
   const posts: PostTypes[] = [];
   const Query = query(
     collection(fireDb, "posts"),
-    where("category", "==", category),
+    ...(category !== "All" ? [where("category", "==", category)] : []),
     orderBy("year", "desc"),
     orderBy("month", "desc"),
     orderBy("day", "desc"),
