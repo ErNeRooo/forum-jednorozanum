@@ -1,6 +1,5 @@
 import PostTypes from "../types/PostTypes";
 import AddPostToDatabase from "./AddPostToDatabase";
-import styles from "./CreatePost.module.sass";
 import GetAccountByUid from "./GetAccountByUid";
 import FormatDate from "./FormatDate";
 

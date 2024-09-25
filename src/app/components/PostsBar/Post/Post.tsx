@@ -24,7 +24,7 @@ const Post = ({
     <>
       <div className={styles.Post}>
         <div className={styles.header}>
-          {`${author} | ${hours}:${minutes} | ${day}.${month}.${year} | UTC ${offsetUTC}`}
+          {`${author} | ${category} | ${hours}:${minutes} | ${day}.${month}.${year} | UTC ${offsetUTC}`}
         </div>
         <div className={styles.content}>
           {image && (

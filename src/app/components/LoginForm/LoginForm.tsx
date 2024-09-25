@@ -1,7 +1,7 @@
 import { useState } from "react";
 import ConsoleInput from "../ConsoleInput/ConsoleInput";
 import { Action } from "@/app/reducers/cmdInputReducer";
-import FindUserNameByEmail from "@/app/utils/FindUserNameByEmail";
+import GetUserNameByEmail from "@/app/utils/GetUserNameByEmail";
 import useLogInAccount from "@/app/hooks/useLogInAccount";
 import HideString from "@/app/utils/HideString";
 import { useRouter } from "next/navigation";
@@ -50,7 +50,7 @@ const LoginForm = ({ dispatch, ExitForm }: Props) => {
 
           setIsInputVisible(false);
 
-          FindUserNameByEmail(email).then((name) => {
+          GetUserNameByEmail(email).then((name) => {
             dispatch({
               type: "login completed",
               value: name,
