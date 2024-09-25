@@ -6,8 +6,10 @@ import PostSearchPanel from "../../components/PostSearchPanel/PostSearchPanel";
 import styles from "./ExplorePage.module.sass";
 import CreatePostButton from "@/app/components/CreatePostButton/CreatePostButton";
 import FormForCreatingPosts from "@/app/components/FormForCreatingPosts/FormForCreatingPosts";
+import PostTypes from "@/app/types/PostTypes";
 
 const ExplorePage = () => {
+  const [posts, setPosts] = useState<PostTypes[]>([]);
   const [currentCategory, setCurrentCategory] = useState<string>("Home");
   const [isCreatePostFormVisible, setIsCreatePostFormVisible] =
     useState<boolean>(false);
@@ -23,6 +25,7 @@ const ExplorePage = () => {
         <FormForCreatingPosts
           setIsFormVisible={setIsCreatePostFormVisible}
           currentCategory={currentCategory}
+          setPosts={setPosts}
         />
       )}
       <section className={styles.container}>
@@ -32,7 +35,7 @@ const ExplorePage = () => {
         </h1>
         <CreatePostButton setIsFormVisible={setIsCreatePostFormVisible} />
       </section>
-      <PostsBar category={currentCategory} />
+      <PostsBar category={currentCategory} posts={posts} setPosts={setPosts} />
     </div>
   );
 };

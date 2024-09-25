@@ -4,12 +4,10 @@ import Post from "./Post/Post";
 import { useEffect, useState } from "react";
 import GetPosts from "@/app/utils/GetPosts";
 
-const PostsBar = ({ category }: Props) => {
-  const [posts, setPosts] = useState<PostTypes[]>([]);
-
+const PostsBar = ({ category, posts, setPosts }: Props) => {
   useEffect(() => {
     GetPosts(category).then((posts) => setPosts(posts));
-  }, [category]);
+  }, [category, setPosts]);
 
   return (
     <div className={styles.PostsBar}>
@@ -22,6 +20,8 @@ const PostsBar = ({ category }: Props) => {
 
 interface Props {
   category: string;
+  posts: PostTypes[];
+  setPosts: React.Dispatch<React.SetStateAction<PostTypes[]>>;
 }
 
 export default PostsBar;

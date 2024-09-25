@@ -6,6 +6,7 @@ const FormatDate = (date: Date) => {
   const minutes = date.getMinutes();
   const seconds = date.getSeconds();
   const offsetUTC: number = date.getTimezoneOffset();
+  const miliseconds = date.getMilliseconds();
 
   const formatedYear = year;
   const formatedMonth = month > 10 ? month : `0${month}`;
@@ -14,9 +15,7 @@ const FormatDate = (date: Date) => {
   const formatedMinutes = minutes > 10 ? minutes : `0${minutes}`;
   const formatedSeconds = seconds > 10 ? seconds : `0${seconds}`;
   const formatedOffsetUTC =
-    offsetUTC < 0 ? `-${Math.abs(offsetUTC) / 60}` : `+${offsetUTC / 60}`;
-
-  const miliseconds: string = date.getMilliseconds().toString();
+    offsetUTC < 0 ? `+${Math.abs(offsetUTC) / 60}` : `-${offsetUTC / 60}`;
 
   return {
     year: formatedYear.toString(),
@@ -26,7 +25,7 @@ const FormatDate = (date: Date) => {
     hours: formatedHours.toString(),
     minutes: formatedMinutes.toString(),
     seconds: formatedSeconds.toString(),
-    miliseconds,
+    miliseconds: miliseconds.toString(),
   };
 };
 

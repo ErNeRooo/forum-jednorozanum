@@ -12,7 +12,8 @@ const CreatePost = (
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
   setIsCreatePostErrorPopupVisible: React.Dispatch<
     React.SetStateAction<boolean>
-  >
+  >,
+  setPosts: React.Dispatch<React.SetStateAction<PostTypes[]>>
 ) => {
   FindAccountByUid(userUid).then((account) => {
     const date = new Date();
@@ -48,6 +49,7 @@ const CreatePost = (
 
     AddPostToDatabase(post)
       .then(() => {
+        setPosts((posts) => [post, ...posts]);
         setIsFormVisible(false);
         setIsLoading(false);
       })

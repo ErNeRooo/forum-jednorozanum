@@ -12,7 +12,11 @@ import PostTypes from "@/app/types/PostTypes";
 import AddPostToDatabase from "@/app/utils/AddPostToDatabase";
 import CreatePost from "@/app/utils/CreatePost";
 
-const FormForCreatingPosts = ({ setIsFormVisible, currentCategory }: Props) => {
+const FormForCreatingPosts = ({
+  setIsFormVisible,
+  currentCategory,
+  setPosts,
+}: Props) => {
   const auth = getAuth(app);
   const user: User = auth.currentUser as User;
   const [text, setText] = useState<string>("");
@@ -29,7 +33,8 @@ const FormForCreatingPosts = ({ setIsFormVisible, currentCategory }: Props) => {
       currentCategory,
       setIsFormVisible,
       setIsLoading,
-      setIsCreatePostErrorPopupVisible
+      setIsCreatePostErrorPopupVisible,
+      setPosts
     );
 
     setIsLoading(true);
@@ -65,6 +70,7 @@ const FormForCreatingPosts = ({ setIsFormVisible, currentCategory }: Props) => {
 interface Props {
   setIsFormVisible: React.Dispatch<React.SetStateAction<boolean>>;
   currentCategory: string;
+  setPosts: React.Dispatch<React.SetStateAction<PostTypes[]>>;
 }
 
 export default FormForCreatingPosts;
