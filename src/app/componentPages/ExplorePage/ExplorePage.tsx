@@ -22,7 +22,7 @@ const ExplorePage = () => {
       {isCreatePostFormVisible && (
         <FormForCreatingPosts
           setIsFormVisible={setIsCreatePostFormVisible}
-          isFormVisible={isCreatePostFormVisible}
+          currentCategory={currentCategory}
         />
       )}
       <section className={styles.container}>

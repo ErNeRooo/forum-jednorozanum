@@ -2,6 +2,7 @@ import { fireDb } from "../firebaseConfig";
 import { collection, addDoc } from "firebase/firestore";
 import PostTypes from "../types/PostTypes";
 import isCreated from "../types/isCreated";
+import { Exception } from "sass";
 
 const CreatePost = async (post: PostTypes): Promise<isCreated> => {
   return await addDoc(collection(fireDb, "posts"), {
@@ -9,6 +10,7 @@ const CreatePost = async (post: PostTypes): Promise<isCreated> => {
     date: post.date,
     hour: post.hour,
     text: post.text,
+    category: post.category,
     image: post.image,
     comments: post.comments,
   })

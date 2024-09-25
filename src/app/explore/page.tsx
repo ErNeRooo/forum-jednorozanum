@@ -4,6 +4,7 @@ import { getAuth, onAuthStateChanged, User } from "firebase/auth";
 import { app } from "../firebaseConfig"; // Assuming this is your Firebase app instance
 import ExplorePage from "../componentPages/ExplorePage/ExplorePage";
 import NotLoggedInPage from "../componentPages/NotLoggedInPage/NotLoggedInPage";
+import Loader from "../components/Loader/Loader";
 
 const Explore = () => {
   const [user, setUser] = useState<User | null>(null); // Track auth state
@@ -23,7 +24,7 @@ const Explore = () => {
 
   // Show loading state while waiting for auth check
   if (loading) {
-    return <div>Loading...</div>;
+    return <Loader />;
   }
 
   // Render pages based on user authentication state
