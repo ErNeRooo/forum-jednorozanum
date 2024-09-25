@@ -8,7 +8,7 @@ const CreatePostButton = ({ setIsFormVisible }: Props) => {
 
   return (
     <div className={styles.CreatePostButton} onClick={handleOnClick}>
-      Create Post
+      <span>Create Post</span>
     </div>
   );
 };
