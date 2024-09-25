@@ -9,6 +9,7 @@ import FormForCreatingPosts from "@/app/components/FormForCreatingPosts/FormForC
 import PostTypes from "@/app/types/PostTypes";
 
 const ExplorePage = () => {
+  const [searchPhrase, setSearchPhrase] = useState<string>("");
   const [posts, setPosts] = useState<PostTypes[]>([]);
   const [currentCategory, setCurrentCategory] = useState<string>("Home");
   const [isCreatePostFormVisible, setIsCreatePostFormVisible] =
@@ -20,7 +21,10 @@ const ExplorePage = () => {
         currentCategory={currentCategory}
         setCurrentCategory={setCurrentCategory}
       />
-      <PostSearchPanel />
+      <PostSearchPanel
+        searchPhrase={searchPhrase}
+        setSearchPhrase={setSearchPhrase}
+      />
       {isCreatePostFormVisible && (
         <FormForCreatingPosts
           setIsFormVisible={setIsCreatePostFormVisible}
@@ -35,7 +39,12 @@ const ExplorePage = () => {
         </h1>
         <CreatePostButton setIsFormVisible={setIsCreatePostFormVisible} />
       </section>
-      <PostsBar category={currentCategory} posts={posts} setPosts={setPosts} />
+      <PostsBar
+        category={currentCategory}
+        posts={posts}
+        setPosts={setPosts}
+        searchPhrase={searchPhrase}
+      />
     </div>
   );
 };
