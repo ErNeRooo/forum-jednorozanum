@@ -1,12 +1,15 @@
 import Image from "next/image";
 import styles from "./Comment.module.sass";
+import CommentTypes from "@/app/types/CommentTypes";
 
 const Comment = ({
-  comment: { id, author, date, hour, text, image },
+  comment: { author, date, hour, offsetUTC, text, image },
 }: Props) => {
   return (
     <div className={styles.Comment}>
-      <div className={styles.header}>{`${author} | ${hour} | ${date}`} </div>
+      <div className={styles.header}>
+        {`${author} | ${hour} | ${date} | UTC ${offsetUTC}`}{" "}
+      </div>
       <div className={styles.content}>
         {image && (
           <div className={styles.image}>
@@ -20,14 +23,7 @@ const Comment = ({
 };
 
 interface Props {
-  comment: {
-    id: string;
-    author: string;
-    date: string;
-    hour: string;
-    text: string;
-    image: string;
-  };
+  comment: CommentTypes;
 }
 
 export default Comment;

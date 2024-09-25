@@ -1,20 +1,20 @@
 "use client";
 import { CSSProperties, useEffect, useState } from "react";
 import { getAuth, User } from "firebase/auth";
-import styles from "./FormForCreatingPosts.module.sass";
+import styles from "./FormForCreatingComments.module.sass";
 import { app } from "@/app/firebaseConfig";
 import CreatePostErrorPopup from "../CreatePostErrorPopup/CreatePostErrorPopup";
 import Loader from "../Loader/Loader";
 import PostTypes from "@/app/types/PostTypes";
 import CreatePost from "@/app/utils/CreatePost";
-import GetAccountByUid from "@/app/utils/GetAccountByUid";
 import Account from "@/app/types/Account";
+import CreateComment from "@/app/utils/CreateComment";
 
-const FormForCreatingPosts = ({
+const FormForCreatingComments = ({
   setIsFormVisible,
-  currentCategory,
   setPosts,
-  account,
+  userName,
+  postUid,
 }: Props) => {
   const user: User = getAuth(app).currentUser as User;
   const [text, setText] = useState<string>("");
@@ -43,14 +43,16 @@ const FormForCreatingPosts = ({
   const handleCreatePostOnClick = (): void => {
     if (!text || user === null) return;
 
-    CreatePost(
+    CreateComment(
+      postUid,
       user.uid,
       text,
-      currentCategory,
       setIsFormVisible,
       setIsLoading,
       setIsCreatePostErrorPopupVisible,
-      setPosts
+      setPosts as React.Dispatch<
+        React.SetStateAction<(prev: PostTypes[]) => PostTypes[] | PostTypes[]>
+      >
     );
 
     setIsLoading(true);
@@ -68,11 +70,11 @@ const FormForCreatingPosts = ({
 
   return (
     <div className={styles.background}>
-      <div className={styles.FormForCreatingPosts}>
+      <div className={styles.FormForCreatingComments}>
         <section className={styles.formHeader}>
-          <span className={styles.title}>{`${
-            account?.name
-          } | ${currentCategory} | ${currentDate.toLocaleTimeString()} | ${currentDate.toLocaleDateString()} | ${offsetUTC} 
+          <span
+            className={styles.title}
+          >{`${userName} | ${currentDate.toLocaleTimeString()} | ${currentDate.toLocaleDateString()} | ${offsetUTC} 
           `}</span>
           <span className={styles.counter}>{`${text.length}/500`}</span>
         </section>
@@ -100,9 +102,9 @@ const FormForCreatingPosts = ({
 
 interface Props {
   setIsFormVisible: React.Dispatch<React.SetStateAction<boolean>>;
-  currentCategory: string;
   setPosts: React.Dispatch<React.SetStateAction<PostTypes[]>>;
-  account: Account | null;
+  userName: string;
+  postUid: string;
 }
 
-export default FormForCreatingPosts;
+export default FormForCreatingComments;

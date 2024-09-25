@@ -4,9 +4,14 @@ import Post from "./Post/Post";
 import { CSSProperties, useEffect, useState } from "react";
 import GetPosts from "@/app/utils/GetPosts";
 import Loader from "../Loader/Loader";
+import GetAccountByUid from "@/app/utils/GetAccountByUid";
+import { getAuth, User } from "firebase/auth";
+import { app } from "@/app/firebaseConfig";
 
 const PostsBar = ({ category, posts, setPosts, searchPhrase }: Props) => {
+  const user: User = getAuth(app).currentUser as User;
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [userName, setUserName] = useState<string>("");
 
   useEffect(() => {
     setIsLoading(true);
@@ -14,7 +19,10 @@ const PostsBar = ({ category, posts, setPosts, searchPhrase }: Props) => {
       setPosts(posts);
       setIsLoading(false);
     });
-  }, [category, setPosts]);
+    GetAccountByUid(user.uid).then((account) => {
+      setUserName(account.name);
+    });
+  }, [category, setPosts, user.uid, userName]);
 
   const loaderStyle: CSSProperties = {
     position: "relative",
@@ -47,7 +55,12 @@ const PostsBar = ({ category, posts, setPosts, searchPhrase }: Props) => {
       {posts
         .filter((post) => post.text.includes(searchPhrase))
         .map((post, index) => (
-          <Post key={index} post={post} />
+          <Post
+            key={index}
+            post={post}
+            setPosts={setPosts}
+            userName={userName}
+          />
         ))}
     </div>
   );

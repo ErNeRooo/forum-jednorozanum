@@ -36,6 +36,8 @@ const GetPosts = async (category: string): Promise<PostTypes[]> => {
         } = doc.data() as PostTypes;
 
         posts.push({
+          id: doc.id,
+          //date
           year: year,
           month: month,
           day: day,
