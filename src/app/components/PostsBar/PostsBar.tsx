@@ -9,6 +9,16 @@ const PostsBar = ({ category, posts, setPosts, searchPhrase }: Props) => {
     GetPosts(category).then((posts) => setPosts(posts));
   }, [category, setPosts]);
 
+  if (posts.length === 0) {
+    return (
+      <div className={styles.PostsBar}>
+        <span
+          className={styles.noPosts}
+        >{`There are no posts in ${category} :/`}</span>
+      </div>
+    );
+  }
+
   return (
     <div className={styles.PostsBar}>
       {posts
