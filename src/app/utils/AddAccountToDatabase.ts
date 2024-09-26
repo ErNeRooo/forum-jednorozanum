@@ -6,17 +6,17 @@ import {
 } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 import CheckIfNameIsOccupied from "./CheckIfNameIsOccupied";
-import isCreated from "../types/isCreated";
+import isDatabaseOperationSuccessfull from "../types/isDatabaseOperationSuccessfull";
 
 const AddAccountToDatabase = async (
   name: string,
   email: string,
   password: string
-): Promise<isCreated> => {
+): Promise<isDatabaseOperationSuccessfull> => {
   const nameIsOccupied = await CheckIfNameIsOccupied(name).then(
     (nameIsOccupied) => {
       if (nameIsOccupied) {
-        return { isCreated: false, errorMessage: "name already in use" };
+        return { isSuccessfull: false, errorMessage: "name already in use" };
       } else {
         return false;
       }
@@ -37,11 +37,11 @@ const AddAccountToDatabase = async (
           isBanned: false,
           categories: ["All", "News", "Philosophy", "Earth", "Science", "War"],
         });
-        return { isCreated: true, errorMessage: null };
+        return { isSuccessfull: true, errorMessage: null };
       })
       .catch((error) => {
         console.log(error);
-        return { isCreated: false, errorMessage: error.message };
+        return { isSuccessfull: false, errorMessage: error.message };
       });
   });
 

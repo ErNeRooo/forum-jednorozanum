@@ -1,9 +1,11 @@
 import { fireDb } from "../firebaseConfig";
 import { collection, addDoc } from "firebase/firestore";
 import PostTypes from "../types/PostTypes";
-import isCreated from "../types/isCreated";
+import isDatabaseOperationSuccessfull from "../types/isDatabaseOperationSuccessfull";
 
-const AddPostToDatabase = async (post: PostTypes): Promise<isCreated> => {
+const AddPostToDatabase = async (
+  post: PostTypes
+): Promise<isDatabaseOperationSuccessfull> => {
   const {
     year,
     month,
@@ -39,14 +41,14 @@ const AddPostToDatabase = async (post: PostTypes): Promise<isCreated> => {
   })
     .then(() => {
       return {
-        isCreated: true,
+        isSuccessfull: true,
         errorMessage: null,
       };
     })
     .catch((error) => {
       console.error(error);
       return {
-        isCreated: false,
+        isSuccessfull: false,
         errorMessage: error.errorMessage,
       };
     });

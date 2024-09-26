@@ -84,7 +84,7 @@ const RegisterForm = ({ dispatch, ExitForm }: Props) => {
     } else {
       if (target.value === password) {
         AddAccountToDatabase(name, email, password).then(
-          ({ isCreated, errorMessage }) => {
+          ({ isSuccessfull: isCreated, errorMessage }) => {
             if (isCreated) {
               setIsInputVisible(false);
 

@@ -5,6 +5,9 @@ import Comment from "../Comment/Comment";
 import { useState } from "react";
 import FormForCreatingComments from "../../FormForCreatingComments/FormForCreatingComments";
 import CreateCommentButton from "../../CreateCommentButton/CreateCommentButton";
+import { getAuth, User } from "firebase/auth";
+import { app } from "@/app/firebaseConfig";
+import DeletePostButton from "../../DeletePostButton/DeletePostButton";
 
 const Post = ({
   post: {
@@ -36,9 +39,14 @@ const Post = ({
       <div className={styles.Post}>
         <div className={styles.header}>
           <span>{`${author} | ${category} | ${hours}:${minutes}:${seconds} | ${day}.${month}.${year} | UTC ${offsetUTC}`}</span>
-          <CreateCommentButton
-            setIsFormVisible={setIsFormForCreatingCommentsVisible}
-          />
+          <div className={styles.buttons}>
+            <CreateCommentButton
+              setIsFormVisible={setIsFormForCreatingCommentsVisible}
+            />
+            {userName === author && (
+              <DeletePostButton postUid={id as string} setPosts={setPosts} />
+            )}
+          </div>
         </div>
         <div className={styles.content}>
           {image && (
