@@ -31,6 +31,11 @@ const CreateComment = (
     } = FormatDate(date);
 
     const comment: CommentTypes = {
+      id: `${
+        account.name
+      }${year}${month}${day}${hours}${minutes}${seconds}${miliseconds}${
+        Math.random() * 100
+      }`,
       author: account.name,
       date: `${year}-${month}-${day}`,
       hour: `${hours}:${minutes}:${seconds}`,

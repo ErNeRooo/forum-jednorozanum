@@ -60,7 +60,13 @@ const Post = ({
       </div>
       <div className={styles.comments}>
         {comments.map((comment) => (
-          <Comment key={comment.id} comment={comment} />
+          <Comment
+            key={comment.id}
+            comment={comment}
+            userName={userName}
+            postId={id as string}
+            setPosts={setPosts}
+          />
         ))}
       </div>
       {isFormForCreatingCommentsVisible && (
@@ -77,8 +83,8 @@ const Post = ({
 
 interface Props {
   post: PostTypes;
-  setPosts: React.Dispatch<React.SetStateAction<PostTypes[]>>;
   userName: string;
+  setPosts: React.Dispatch<React.SetStateAction<PostTypes[]>>;
 }
 
 export default Post;
