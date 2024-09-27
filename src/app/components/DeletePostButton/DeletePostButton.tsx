@@ -5,14 +5,23 @@ import Image from "next/image";
 import deleteIcon from "../../../../public/deleteIcon.svg";
 import { CSSProperties, useState } from "react";
 
-const DeletePostButton = ({ postUid, setPosts }: Props) => {
+const DeletePostButton = ({
+  postUid,
+  setPosts,
+  setPostsQuantityInCategory,
+}: Props) => {
   const [filter, setFilter] = useState<string>(
     "invert(47%) sepia(67%) saturate(566%) hue-rotate(73deg) brightness(97%) contrast(83%)"
   );
   const handleOnClick = (): void => {
-    setPosts((prev) => prev.filter((post) => post.id !== postUid));
     DeletePostFromDatabase(postUid).then(({ isSuccessfull, errorMessage }) => {
-      if (!isSuccessfull) console.log(errorMessage);
+      if (isSuccessfull) {
+        setPosts((prev) => prev.filter((post) => post.id !== postUid));
+        setPostsQuantityInCategory((prev) => prev - 1);
+      } else {
+        console.log(errorMessage);
+        alert("Failed to delete post");
+      }
     });
   };
 
@@ -39,6 +48,7 @@ const DeletePostButton = ({ postUid, setPosts }: Props) => {
 interface Props {
   postUid: string;
   setPosts: React.Dispatch<React.SetStateAction<PostTypes[]>>;
+  setPostsQuantityInCategory: React.Dispatch<React.SetStateAction<number>>;
 }
 
 export default DeletePostButton;

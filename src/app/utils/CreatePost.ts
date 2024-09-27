@@ -12,7 +12,8 @@ const CreatePost = (
   setIsCreatePostErrorPopupVisible: React.Dispatch<
     React.SetStateAction<boolean>
   >,
-  setPosts: React.Dispatch<React.SetStateAction<PostTypes[]>>
+  setPosts: React.Dispatch<React.SetStateAction<PostTypes[]>>,
+  setPostsQuantityInCategory: React.Dispatch<React.SetStateAction<number>>
 ) => {
   GetAccountByUid(userUid).then((account) => {
     const date = new Date();
@@ -49,6 +50,7 @@ const CreatePost = (
     AddPostToDatabase(post)
       .then(() => {
         setPosts((posts) => [post, ...posts]);
+        setPostsQuantityInCategory((prev) => prev + 1);
         setIsFormVisible(false);
         setIsLoading(false);
       })

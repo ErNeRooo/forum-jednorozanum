@@ -28,6 +28,7 @@ const Post = ({
   },
   userName,
   setPosts,
+  setPostsQuantityInCategory,
 }: Props) => {
   const [
     isFormForCreatingCommentsVisible,
@@ -44,7 +45,11 @@ const Post = ({
               setIsFormVisible={setIsFormForCreatingCommentsVisible}
             />
             {userName === author && (
-              <DeletePostButton postUid={id as string} setPosts={setPosts} />
+              <DeletePostButton
+                postUid={id as string}
+                setPosts={setPosts}
+                setPostsQuantityInCategory={setPostsQuantityInCategory}
+              />
             )}
           </div>
         </div>
@@ -85,6 +90,7 @@ interface Props {
   post: PostTypes;
   userName: string;
   setPosts: React.Dispatch<React.SetStateAction<PostTypes[]>>;
+  setPostsQuantityInCategory: React.Dispatch<React.SetStateAction<number>>;
 }
 
 export default Post;

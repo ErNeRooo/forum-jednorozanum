@@ -11,6 +11,7 @@ import GetAccountByUid from "@/app/utils/GetAccountByUid";
 import { app } from "@/app/firebaseConfig";
 import { getAuth, User } from "firebase/auth";
 import Account from "@/app/types/Account";
+import CountPosts from "@/app/utils/CountPosts";
 
 const ExplorePage = () => {
   const user: User = getAuth(app).currentUser as User;
@@ -20,12 +21,22 @@ const ExplorePage = () => {
   const [isCreatePostFormVisible, setIsCreatePostFormVisible] =
     useState<boolean>(false);
   const [account, setAccount] = useState<Account | null>(null);
+  const [postsQuantityInCategory, setPostsQuantityInCategory] =
+    useState<number>(0);
 
   useEffect(() => {
     GetAccountByUid(user.uid).then((account) => {
       setAccount(account);
     });
-  }, [user.uid]);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    CountPosts(currentCategory).then((postsQuantity) => {
+      setPostsQuantityInCategory(postsQuantity);
+    });
+  }, [currentCategory]);
 
   return (
     <div className={styles.ExplorePage}>
@@ -43,6 +54,7 @@ const ExplorePage = () => {
           currentCategory={currentCategory}
           setPosts={setPosts}
           account={account}
+          setPostsQuantityInCategory={setPostsQuantityInCategory}
         />
       )}
       <section className={styles.container}>
@@ -52,14 +64,16 @@ const ExplorePage = () => {
         </h1>
         <CreatePostButton setIsFormVisible={setIsCreatePostFormVisible} />
       </section>
-      <span>{`Found ${posts.length} ${
-        posts.length === 1 ? "post" : "posts"
+      <span>{`Found ${postsQuantityInCategory} ${
+        postsQuantityInCategory === 1 ? "post" : "posts"
       } in ${currentCategory}`}</span>
       <PostsBar
         category={currentCategory}
         posts={posts}
+        postsQuantityInCategory={postsQuantityInCategory}
         setPosts={setPosts}
         searchPhrase={searchPhrase}
+        setPostsQuantityInCategory={setPostsQuantityInCategory}
       />
     </div>
   );

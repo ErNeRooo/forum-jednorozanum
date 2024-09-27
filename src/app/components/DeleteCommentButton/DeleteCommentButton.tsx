@@ -11,20 +11,24 @@ const DeleteCommentButton = ({ postUid, commentUid, setPosts }: Props) => {
     "invert(47%) sepia(67%) saturate(566%) hue-rotate(73deg) brightness(97%) contrast(83%)"
   );
   const handleOnClick = (): void => {
-    setPosts((prev: PostTypes[]) => {
-      return prev.flatMap((post) => {
-        if (post.id !== postUid) return post;
-        return {
-          ...post,
-          comments: post.comments.filter(
-            (comment) => comment.id !== commentUid
-          ),
-        };
-      });
-    });
     DeleteCommentFromDatabase(postUid, commentUid).then(
       ({ isSuccessfull, errorMessage }) => {
-        if (!isSuccessfull) console.log(errorMessage);
+        if (isSuccessfull) {
+          setPosts((prev: PostTypes[]) => {
+            return prev.flatMap((post) => {
+              if (post.id !== postUid) return post;
+              return {
+                ...post,
+                comments: post.comments.filter(
+                  (comment) => comment.id !== commentUid
+                ),
+              };
+            });
+          });
+        } else {
+          console.log(errorMessage);
+          alert("Failed to delete comment");
+        }
       }
     );
   };

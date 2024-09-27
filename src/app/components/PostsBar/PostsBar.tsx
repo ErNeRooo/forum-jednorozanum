@@ -7,22 +7,33 @@ import Loader from "../Loader/Loader";
 import GetAccountByUid from "@/app/utils/GetAccountByUid";
 import { getAuth, User } from "firebase/auth";
 import { app } from "@/app/firebaseConfig";
+import SeeMorePostsButton from "../SeeMorePostsButton/SeeMorePostsButton";
 
-const PostsBar = ({ category, posts, setPosts, searchPhrase }: Props) => {
+const PostsBar = ({
+  category,
+  posts,
+  postsQuantityInCategory,
+  setPosts,
+  searchPhrase,
+  setPostsQuantityInCategory,
+}: Props) => {
   const user: User = getAuth(app).currentUser as User;
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [userName, setUserName] = useState<string>("");
+  const [postLimit, setPostLimit] = useState<number>(10);
 
   useEffect(() => {
     setIsLoading(true);
-    GetPosts(category).then((posts) => {
+    setPostLimit(10);
+    GetPosts(category, 10).then((posts) => {
       setPosts(posts);
       setIsLoading(false);
     });
     GetAccountByUid(user.uid).then((account) => {
       setUserName(account.name);
     });
-  }, [category, setPosts, user.uid, userName]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [category]);
 
   const loaderStyle: CSSProperties = {
     position: "relative",
@@ -60,8 +71,18 @@ const PostsBar = ({ category, posts, setPosts, searchPhrase }: Props) => {
             post={post}
             setPosts={setPosts}
             userName={userName}
+            setPostsQuantityInCategory={setPostsQuantityInCategory}
           />
         ))}
+
+      {postsQuantityInCategory > posts.length && (
+        <SeeMorePostsButton
+          postLimit={postLimit}
+          category={category}
+          setPostLimit={setPostLimit}
+          setPosts={setPosts}
+        />
+      )}
     </div>
   );
 };
@@ -69,8 +90,10 @@ const PostsBar = ({ category, posts, setPosts, searchPhrase }: Props) => {
 interface Props {
   category: string;
   posts: PostTypes[];
+  postsQuantityInCategory: number;
   setPosts: React.Dispatch<React.SetStateAction<PostTypes[]>>;
   searchPhrase: string;
+  setPostsQuantityInCategory: React.Dispatch<React.SetStateAction<number>>;
 }
 
 export default PostsBar;

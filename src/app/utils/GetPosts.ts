@@ -1,8 +1,18 @@
 import { fireDb } from "../firebaseConfig";
-import { getDocs, where, collection, query, orderBy } from "firebase/firestore";
+import {
+  getDocs,
+  where,
+  collection,
+  query,
+  orderBy,
+  limit,
+} from "firebase/firestore";
 import PostTypes from "../types/PostTypes";
 
-const GetPosts = async (category: string): Promise<PostTypes[]> => {
+const GetPosts = async (
+  category: string,
+  limitOfPosts: number
+): Promise<PostTypes[]> => {
   const posts: PostTypes[] = [];
   const Query = query(
     collection(fireDb, "posts"),
@@ -13,7 +23,8 @@ const GetPosts = async (category: string): Promise<PostTypes[]> => {
     orderBy("hours", "desc"),
     orderBy("minutes", "desc"),
     orderBy("seconds", "desc"),
-    orderBy("miliseconds", "desc")
+    orderBy("miliseconds", "desc"),
+    limit(limitOfPosts)
   );
 
   return getDocs(Query)

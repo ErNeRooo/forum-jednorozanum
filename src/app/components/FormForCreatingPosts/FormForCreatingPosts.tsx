@@ -15,6 +15,7 @@ const FormForCreatingPosts = ({
   currentCategory,
   setPosts,
   account,
+  setPostsQuantityInCategory,
 }: Props) => {
   const user: User = getAuth(app).currentUser as User;
   const [text, setText] = useState<string>("");
@@ -50,7 +51,8 @@ const FormForCreatingPosts = ({
       setIsFormVisible,
       setIsLoading,
       setIsCreatePostErrorPopupVisible,
-      setPosts
+      setPosts,
+      setPostsQuantityInCategory
     );
 
     setIsLoading(true);
@@ -103,6 +105,7 @@ interface Props {
   currentCategory: string;
   setPosts: React.Dispatch<React.SetStateAction<PostTypes[]>>;
   account: Account | null;
+  setPostsQuantityInCategory: React.Dispatch<React.SetStateAction<number>>;
 }
 
 export default FormForCreatingPosts;
