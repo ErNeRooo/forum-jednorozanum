@@ -52,6 +52,9 @@ const ExplorePage = () => {
         </h1>
         <CreatePostButton setIsFormVisible={setIsCreatePostFormVisible} />
       </section>
+      <span>{`Found ${posts.length} ${
+        posts.length === 1 ? "post" : "posts"
+      } in ${currentCategory}`}</span>
       <PostsBar
         category={currentCategory}
         posts={posts}
