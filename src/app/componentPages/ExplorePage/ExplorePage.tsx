@@ -74,6 +74,7 @@ const ExplorePage = () => {
         setPosts={setPosts}
         searchPhrase={searchPhrase}
         setPostsQuantityInCategory={setPostsQuantityInCategory}
+        account={account}
       />
     </div>
   );

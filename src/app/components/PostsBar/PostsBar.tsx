@@ -8,6 +8,7 @@ import GetAccountByUid from "@/app/utils/GetAccountByUid";
 import { getAuth, User } from "firebase/auth";
 import { app } from "@/app/firebaseConfig";
 import SeeMorePostsButton from "../SeeMorePostsButton/SeeMorePostsButton";
+import Account from "@/app/types/Account";
 
 const PostsBar = ({
   category,
@@ -16,6 +17,7 @@ const PostsBar = ({
   setPosts,
   searchPhrase,
   setPostsQuantityInCategory,
+  account,
 }: Props) => {
   const user: User = getAuth(app).currentUser as User;
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -72,6 +74,7 @@ const PostsBar = ({
             setPosts={setPosts}
             userName={userName}
             setPostsQuantityInCategory={setPostsQuantityInCategory}
+            account={account}
           />
         ))}
 
@@ -94,6 +97,7 @@ interface Props {
   setPosts: React.Dispatch<React.SetStateAction<PostTypes[]>>;
   searchPhrase: string;
   setPostsQuantityInCategory: React.Dispatch<React.SetStateAction<number>>;
+  account: Account | null;
 }
 
 export default PostsBar;

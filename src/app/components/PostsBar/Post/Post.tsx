@@ -8,6 +8,7 @@ import CreateCommentButton from "../../CreateCommentButton/CreateCommentButton";
 import { getAuth, User } from "firebase/auth";
 import { app } from "@/app/firebaseConfig";
 import DeletePostButton from "../../DeletePostButton/DeletePostButton";
+import Account from "@/app/types/Account";
 
 const Post = ({
   post: {
@@ -29,6 +30,7 @@ const Post = ({
   userName,
   setPosts,
   setPostsQuantityInCategory,
+  account,
 }: Props) => {
   const [
     isFormForCreatingCommentsVisible,
@@ -44,7 +46,7 @@ const Post = ({
             <CreateCommentButton
               setIsFormVisible={setIsFormForCreatingCommentsVisible}
             />
-            {userName === author && (
+            {(userName === author || account?.role === "admin") && (
               <DeletePostButton
                 postUid={id as string}
                 setPosts={setPosts}
@@ -71,6 +73,7 @@ const Post = ({
             userName={userName}
             postId={id as string}
             setPosts={setPosts}
+            account={account}
           />
         ))}
       </div>
@@ -91,6 +94,7 @@ interface Props {
   userName: string;
   setPosts: React.Dispatch<React.SetStateAction<PostTypes[]>>;
   setPostsQuantityInCategory: React.Dispatch<React.SetStateAction<number>>;
+  account: Account | null;
 }
 
 export default Post;

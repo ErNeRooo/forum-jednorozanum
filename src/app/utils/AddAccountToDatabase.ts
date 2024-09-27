@@ -7,6 +7,7 @@ import {
 import { doc, setDoc } from "firebase/firestore";
 import CheckIfNameIsOccupied from "./CheckIfNameIsOccupied";
 import isDatabaseOperationSuccessfull from "../types/isDatabaseOperationSuccessfull";
+import Account from "../types/Account";
 
 const AddAccountToDatabase = async (
   name: string,
@@ -31,12 +32,16 @@ const AddAccountToDatabase = async (
         console.log(userCredential);
         const user = userCredential.user;
         const userDoc = doc(fireDb, "accounts", user.uid);
-        setDoc(userDoc, {
+
+        const account: Account = {
           name: name,
           email: email,
+          role: "user",
           isBanned: false,
           categories: ["All", "News", "Philosophy", "Earth", "Science", "War"],
-        });
+        };
+
+        setDoc(userDoc, account);
         return { isSuccessfull: true, errorMessage: null };
       })
       .catch((error) => {
