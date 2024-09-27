@@ -18,6 +18,7 @@ const GetPostByUid = (postUid: string): Promise<PostTypes> => {
       category,
       image,
       comments,
+      isPinned,
     } = doc.data() as PostTypes;
 
     return {
@@ -35,6 +36,7 @@ const GetPostByUid = (postUid: string): Promise<PostTypes> => {
       category: category,
       image: image,
       comments: comments,
+      isPinned: isPinned,
     };
   });
 };

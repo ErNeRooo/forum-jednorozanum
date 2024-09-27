@@ -30,12 +30,22 @@ const PostsBar = ({
     GetPosts(category, 10).then((posts) => {
       setPosts(posts);
       setIsLoading(false);
+
+      setPosts((prev) => {
+        return [...prev].sort((a, b) => {
+          if (a.isPinned && !b.isPinned) return -1;
+          if (!a.isPinned && b.isPinned) return 1;
+          return 0;
+        });
+      });
     });
     GetAccountByUid(user.uid).then((account) => {
       setUserName(account.name);
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [category]);
+
+  useEffect(() => {}, []);
 
   const loaderStyle: CSSProperties = {
     position: "relative",
@@ -67,16 +77,20 @@ const PostsBar = ({
     <div className={styles.PostsBar}>
       {posts
         .filter((post) => post.text.includes(searchPhrase))
-        .map((post, index) => (
-          <Post
-            key={index}
-            post={post}
-            setPosts={setPosts}
-            userName={userName}
-            setPostsQuantityInCategory={setPostsQuantityInCategory}
-            account={account}
-          />
-        ))}
+        .map((post, index) => {
+          console.log(post.id);
+          posts.length === index + 1 && console.log("---");
+          return (
+            <Post
+              key={post.id as string}
+              post={post}
+              setPosts={setPosts}
+              userName={userName}
+              setPostsQuantityInCategory={setPostsQuantityInCategory}
+              account={account}
+            />
+          );
+        })}
 
       {postsQuantityInCategory > posts.length && (
         <SeeMorePostsButton

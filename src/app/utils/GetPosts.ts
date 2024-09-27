@@ -44,6 +44,7 @@ const GetPosts = async (
           category,
           image,
           comments,
+          isPinned,
         } = doc.data() as PostTypes;
 
         posts.push({
@@ -64,6 +65,7 @@ const GetPosts = async (
           category: category,
           image: image,
           comments: comments,
+          isPinned: isPinned,
         });
       }
 

@@ -20,4 +20,5 @@ interface PostTypes {
   category: string;
   image: string;
   comments: CommentTypes[];
+  isPinned: boolean;
 }

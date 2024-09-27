@@ -45,6 +45,7 @@ const CreatePost = (
       category: currentCategory,
       image: "",
       comments: [],
+      isPinned: false,
     };
 
     AddPostToDatabase(post)

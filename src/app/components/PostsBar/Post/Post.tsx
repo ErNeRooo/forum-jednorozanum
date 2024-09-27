@@ -9,6 +9,7 @@ import { getAuth, User } from "firebase/auth";
 import { app } from "@/app/firebaseConfig";
 import DeletePostButton from "../../DeletePostButton/DeletePostButton";
 import Account from "@/app/types/Account";
+import PinPostButton from "../../PinPostButton/PinPostButton";
 
 const Post = ({
   post: {
@@ -26,6 +27,7 @@ const Post = ({
     category,
     image,
     comments,
+    isPinned,
   },
   userName,
   setPosts,
@@ -36,10 +38,14 @@ const Post = ({
     isFormForCreatingCommentsVisible,
     setIsFormForCreatingCommentsVisible,
   ] = useState(false);
+  const [isPinnedState, setIsPinnedState] = useState(isPinned);
 
   return (
     <>
-      <div className={styles.Post}>
+      <div
+        key={id}
+        className={styles.Post + " " + (isPinned ? styles.pinned : "")}
+      >
         <div className={styles.header}>
           <span>{`${author} | ${category} | ${hours}:${minutes}:${seconds} | ${day}.${month}.${year} | UTC ${offsetUTC}`}</span>
           <div className={styles.buttons}>
@@ -51,6 +57,14 @@ const Post = ({
                 postUid={id as string}
                 setPosts={setPosts}
                 setPostsQuantityInCategory={setPostsQuantityInCategory}
+              />
+            )}
+            {account?.role === "admin" && (
+              <PinPostButton
+                postUid={id as string}
+                isPinned={isPinnedState}
+                setIsPinned={setIsPinnedState}
+                setPosts={setPosts}
               />
             )}
           </div>
