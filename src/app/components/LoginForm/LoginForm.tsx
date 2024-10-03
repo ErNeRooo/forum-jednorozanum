@@ -2,7 +2,7 @@ import { useState } from "react";
 import ConsoleInput from "../ConsoleInput/ConsoleInput";
 import { Action } from "@/app/reducers/cmdInputReducer";
 import GetUserNameByEmail from "@/app/utils/GetUserNameByEmail";
-import useLogInAccount from "@/app/hooks/useLogInAccount";
+import LogInAccount from "@/app/utils/LogInAccount";
 import HideString from "@/app/utils/HideString";
 import { useRouter } from "next/navigation";
 
@@ -10,7 +10,6 @@ const LoginForm = ({ dispatch, ExitForm }: Props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isInputVisible, setIsInputVisible] = useState(true);
-  const { LogIn } = useLogInAccount();
   const router = useRouter();
 
   const handleOnEnter = (e: React.KeyboardEvent<HTMLInputElement>): void => {
@@ -40,7 +39,7 @@ const LoginForm = ({ dispatch, ExitForm }: Props) => {
     } else if (password === "") {
       setPassword(target.value);
 
-      LogIn(email, target.value).then(({ isLoggedIn, errorMessage }) => {
+      LogInAccount(email, target.value).then(({ isLoggedIn, errorMessage }) => {
         if (isLoggedIn) {
           dispatch({
             type: "just save command",
