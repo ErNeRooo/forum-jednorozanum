@@ -8,11 +8,11 @@ const CategoryPanel = ({ currentCategory, setCurrentCategory }: Props) => {
   const [categories, setCategories] = useState<string[]>([]);
 
   useEffect(() => {
-    if (!user) return;
-    GetAccountCategories(user.uid).then((Categories) => {
-      setCategories(Categories);
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    if (user) {
+      GetAccountCategories(user.uid).then((Categories) => {
+        setCategories(Categories);
+      });
+    }
   }, [user]);
 
   return (

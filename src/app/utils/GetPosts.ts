@@ -42,10 +42,10 @@ const GetPosts = async (
           author,
           text,
           category,
-          image,
+          imageUrl,
           comments,
           isPinned,
-        } = doc.data() as PostTypes;
+        } = doc.data();
 
         posts.push({
           id: doc.id,
@@ -63,7 +63,7 @@ const GetPosts = async (
           author: author,
           text: text,
           category: category,
-          image: image,
+          imageUrl: doc.data().imageUrl,
           comments: comments,
           isPinned: isPinned,
         });

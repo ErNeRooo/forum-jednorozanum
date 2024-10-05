@@ -60,6 +60,7 @@ const FormForCreatingPosts = ({
       user.uid,
       text,
       currentCategory,
+      selectedFile,
       setIsFormVisible,
       setIsLoading,
       setIsCreatePostErrorPopupVisible,

@@ -18,7 +18,7 @@ interface PostTypes {
   author: string;
   text: string;
   category: string;
-  image: string;
+  imageUrl: string;
   comments: CommentTypes[];
   isPinned: boolean;
 }

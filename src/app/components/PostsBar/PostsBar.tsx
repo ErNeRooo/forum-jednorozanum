@@ -19,31 +19,39 @@ const PostsBar = ({
   setPostsQuantityInCategory,
   account,
 }: Props) => {
-  const user: User = getAuth(app).currentUser as User;
+  const user: User | null = getAuth(app).currentUser;
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [userName, setUserName] = useState<string>("");
   const [postLimit, setPostLimit] = useState<number>(10);
 
   useEffect(() => {
-    setIsLoading(true);
-    setPostLimit(10);
-    GetPosts(category, 10).then((posts) => {
-      setPosts(posts);
-      setIsLoading(false);
+    if (user) {
+      setIsLoading(true);
+      setPostLimit(10);
+      GetPosts(category, 10).then((posts) => {
+        setPosts(posts);
+      });
+      GetAccountByUid(user.uid).then((account) => {
+        if (!account) return;
 
-      setPosts((prev) => {
-        return [...prev].sort((a, b) => {
-          if (a.isPinned && !b.isPinned) return -1;
-          if (!a.isPinned && b.isPinned) return 1;
-          return 0;
-        });
+        setUserName(account.name);
+        setIsLoading(false);
+      });
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [category, user]);
+
+  useEffect(() => {
+    setPosts((prev) => {
+      return [...prev].sort((a, b) => {
+        if (a.isPinned && !b.isPinned) return -1;
+        if (!a.isPinned && b.isPinned) return 1;
+        return 0;
       });
     });
-    GetAccountByUid(user.uid).then((account) => {
-      setUserName(account.name);
-    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [category]);
+  }, [posts]);
 
   const loaderStyle: CSSProperties = {
     position: "relative",

@@ -1,11 +1,11 @@
-import isDatabaseOperationSuccessfull from "../types/isDatabaseOperationSuccessfull";
+import result from "../types/isDatabaseOperationSuccessfull";
 import { fireDb } from "../firebaseConfig";
 import { updateDoc, doc } from "firebase/firestore";
 
 const UpdatePinPost = async (
   postUid: string,
   isPinned: boolean
-): Promise<isDatabaseOperationSuccessfull> => {
+): Promise<result> => {
   return await updateDoc(doc(fireDb, "posts", postUid), {
     isPinned: !isPinned,
   })

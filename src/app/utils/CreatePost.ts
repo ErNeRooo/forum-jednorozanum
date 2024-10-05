@@ -3,11 +3,15 @@ import AddPostToDatabase from "./AddPostToDatabase";
 import GetAccountByUid from "./GetAccountByUid";
 import FormatDate from "./FormatDate";
 import GenerateRandomString from "./GenerateRandomString";
+import AddFileToDatabase from "./AddFileToDatabase";
+import { getStorage, ref, getDownloadURL } from "firebase/storage";
+import { app } from "../firebaseConfig";
 
 const CreatePost = (
   userUid: string,
   text: string,
   currentCategory: string,
+  image: File | null,
   setIsFormVisible: React.Dispatch<React.SetStateAction<boolean>>,
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
   setIsCreatePostErrorPopupVisible: React.Dispatch<
@@ -17,6 +21,8 @@ const CreatePost = (
   setPostsQuantityInCategory: React.Dispatch<React.SetStateAction<number>>
 ) => {
   GetAccountByUid(userUid).then((account) => {
+    if (!account) return;
+
     const date = new Date();
     const {
       year,
@@ -28,6 +34,15 @@ const CreatePost = (
       seconds,
       miliseconds,
     } = FormatDate(date);
+
+    const storage = getStorage(app);
+    const imageUniqueName = image
+      ? `${GenerateRandomString(
+          "0123456789ABCDSEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",
+          10,
+          10
+        )}_${day}-${month}-${year}`
+      : "";
 
     const post: PostTypes = {
       id: `${
@@ -51,12 +66,29 @@ const CreatePost = (
       author: account.name,
       text: text,
       category: currentCategory,
-      image: "",
+      imageUrl: "",
       comments: [],
       isPinned: false,
     };
 
-    AddPostToDatabase(post)
+    const storageRef = ref(storage, `images/${imageUniqueName}`);
+
+    AddFileToDatabase(image, storageRef)
+      .then((result) => {
+        if (result.isSuccessfull) {
+          post.imageUrl = result.downloadUrl ? result.downloadUrl : "";
+
+          AddPostToDatabase(post).then((result) => {
+            if (!result.isSuccessfull) {
+              console.error(result.errorMessage);
+              return Promise.resolve();
+            }
+          });
+        } else {
+          console.error(result.errorMessage);
+          return Promise.resolve();
+        }
+      })
       .then(() => {
         setPostsQuantityInCategory((prev) => prev + 1);
         setIsFormVisible(false);

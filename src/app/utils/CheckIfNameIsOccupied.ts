@@ -7,9 +7,6 @@ const CheckIfNameIsOccupied = async (name: string): Promise<boolean> => {
     where("name", "==", name)
   );
   return getDocs(Query).then((querySnapshot) => {
-    console.log(querySnapshot.docs.length);
-    console.log(querySnapshot);
-    console.log(querySnapshot.docs.length > 0 ? true : false);
     return querySnapshot.docs.length > 0 ? true : false;
   });
 };

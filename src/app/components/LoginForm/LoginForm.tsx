@@ -39,60 +39,66 @@ const LoginForm = ({ dispatch, ExitForm, setIsLoading }: Props) => {
     } else if (password === "") {
       setPassword(target.value);
 
-      LogInAccount(email, target.value).then(({ isLoggedIn, errorMessage }) => {
-        if (isLoggedIn) {
-          dispatch({
-            type: "just save command",
-            value: HideString(target.value),
-            consoleTitle: "Enter your password: ",
-          });
-
-          setIsInputVisible(false);
-
-          GetUserNameByEmail(email).then((name) => {
+      LogInAccount(email, target.value)
+        .then(({ isLoggedIn, errorMessage }) => {
+          if (isLoggedIn) {
             dispatch({
-              type: "login completed",
-              value: name,
-              consoleTitle: "Enter your password: ",
-            });
-          });
-
-          setTimeout(() => {
-            setIsLoading(true);
-            router.push("/explore");
-          }, 3000);
-        } else {
-          console.log(errorMessage);
-
-          if (errorMessage === "Firebase: Error (auth/wrong-password).") {
-            dispatch({
-              type: "wrong password",
+              type: "just save command",
               value: HideString(target.value),
               consoleTitle: "Enter your password: ",
             });
-          } else if (
-            errorMessage === "Firebase: Error (auth/user-not-found)."
-          ) {
-            dispatch({
-              type: "user not found",
-              value: HideString(target.value),
-              consoleTitle: "Enter your password: ",
+
+            setIsInputVisible(false);
+
+            GetUserNameByEmail(email).then((name) => {
+              dispatch({
+                type: "login completed",
+                value: name,
+                consoleTitle: "Enter your password: ",
+              });
             });
+
+            setTimeout(() => {
+              setIsLoading(true);
+            }, 3000);
           } else {
-            dispatch({
-              type: "account log in error",
-              value: HideString(target.value),
-              consoleTitle: "Enter your password: ",
-            });
+            console.log(errorMessage);
+
+            if (errorMessage === "Firebase: Error (auth/wrong-password).") {
+              dispatch({
+                type: "wrong password",
+                value: HideString(target.value),
+                consoleTitle: "Enter your password: ",
+              });
+            } else if (
+              errorMessage === "Firebase: Error (auth/user-not-found)."
+            ) {
+              dispatch({
+                type: "user not found",
+                value: HideString(target.value),
+                consoleTitle: "Enter your password: ",
+              });
+            } else {
+              dispatch({
+                type: "account log in error",
+                value: HideString(target.value),
+                consoleTitle: "Enter your password: ",
+              });
+            }
+
+            ExitForm();
           }
 
-          ExitForm();
-        }
-
-        setEmail("");
-        setPassword("");
-        target.value = "";
-      });
+          setEmail("");
+          setPassword("");
+          target.value = "";
+          return isLoggedIn;
+        })
+        .then((isLoggedIn) => {
+          if (isLoggedIn) {
+            router.push("/explore");
+          }
+        });
     }
   };
 

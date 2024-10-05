@@ -1,12 +1,12 @@
 import { fireDb } from "../firebaseConfig";
 import { updateDoc, doc } from "firebase/firestore";
 import GetPostByUid from "./GetPostByUid";
-import isDatabaseOperationSuccessfull from "../types/isDatabaseOperationSuccessfull";
+import result from "../types/isDatabaseOperationSuccessfull";
 
 const DeleteCommentFromDatabase = async (
   postUid: string,
   commentUid: string
-): Promise<isDatabaseOperationSuccessfull> => {
+): Promise<result> => {
   return GetPostByUid(postUid).then((post) => {
     return updateDoc(doc(fireDb, "posts", postUid), {
       ...post,

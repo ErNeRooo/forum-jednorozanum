@@ -5,8 +5,6 @@ import Comment from "../Comment/Comment";
 import { useState } from "react";
 import FormForCreatingComments from "../../FormForCreatingComments/FormForCreatingComments";
 import CreateCommentButton from "../../CreateCommentButton/CreateCommentButton";
-import { getAuth, User } from "firebase/auth";
-import { app } from "@/app/firebaseConfig";
 import DeletePostButton from "../../DeletePostButton/DeletePostButton";
 import Account from "@/app/types/Account";
 import PinPostButton from "../../PinPostButton/PinPostButton";
@@ -25,7 +23,7 @@ const Post = ({
     author,
     text,
     category,
-    image,
+    imageUrl,
     comments,
     isPinned,
   },
@@ -70,9 +68,14 @@ const Post = ({
           </div>
         </div>
         <div className={styles.content}>
-          {image && (
+          {imageUrl && (
             <div className={styles.image}>
-              <Image src={image} alt="post image" />
+              <Image
+                src={imageUrl}
+                alt="post image"
+                fill={true}
+                style={{ objectFit: "contain" }}
+              />
             </div>
           )}
 

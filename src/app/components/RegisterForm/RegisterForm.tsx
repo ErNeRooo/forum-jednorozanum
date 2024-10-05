@@ -83,9 +83,9 @@ const RegisterForm = ({ dispatch, ExitForm, setIsLoading }: Props) => {
       target.value = "";
     } else {
       if (target.value === password) {
-        AddAccountToDatabase(name, email, password).then(
-          ({ isSuccessfull: isCreated, errorMessage }) => {
-            if (isCreated) {
+        AddAccountToDatabase(name, email, password)
+          .then(({ isSuccessfull, errorMessage }) => {
+            if (isSuccessfull) {
               setIsInputVisible(false);
 
               dispatch({
@@ -95,7 +95,6 @@ const RegisterForm = ({ dispatch, ExitForm, setIsLoading }: Props) => {
               });
 
               setIsLoading(true);
-              router.push("/explore");
             } else if (errorMessage === "name already in use") {
               dispatch({
                 type: "name already in use",
@@ -123,8 +122,13 @@ const RegisterForm = ({ dispatch, ExitForm, setIsLoading }: Props) => {
             }
 
             target.value = "";
-          }
-        );
+            return { isSuccessfull, errorMessage };
+          })
+          .then(({ isSuccessfull }) => {
+            if (isSuccessfull) {
+              router.push("/explore");
+            }
+          });
       } else {
         dispatch({
           type: "passwords does not match",

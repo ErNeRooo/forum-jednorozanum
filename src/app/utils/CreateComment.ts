@@ -19,6 +19,11 @@ const CreateComment = (
   >
 ) => {
   GetAccountByUid(userUid).then((account) => {
+    if (!account) {
+      console.log("Account not found");
+      return;
+    }
+
     const date = new Date();
     const {
       year,
@@ -44,7 +49,7 @@ const CreateComment = (
       hour: `${hours}:${minutes}:${seconds}`,
       offsetUTC: offsetUTC,
       text: text,
-      image: "",
+      imageUrl: "",
     };
 
     AddCommentToDatabase(postUid, comment)

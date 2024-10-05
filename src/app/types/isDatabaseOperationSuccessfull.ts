@@ -1,4 +1,4 @@
-export default interface isDatabaseOperationSuccessfull {
+export default interface result {
   isSuccessfull: boolean;
   errorMessage: string | null;
 }

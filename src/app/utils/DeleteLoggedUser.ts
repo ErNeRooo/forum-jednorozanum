@@ -1,9 +1,9 @@
 import { deleteUser, getAuth, User } from "firebase/auth";
-import isDatabaseOperationSuccessfull from "../types/isDatabaseOperationSuccessfull";
+import result from "../types/isDatabaseOperationSuccessfull";
 import { deleteDoc, doc } from "firebase/firestore";
 import { fireDb } from "../firebaseConfig";
 
-const DeleteLoggedUser = (): Promise<isDatabaseOperationSuccessfull> => {
+const DeleteLoggedUser = (): Promise<result> => {
   const user: User = getAuth().currentUser as User;
   const userDoc = doc(fireDb, "accounts", user.uid);
 

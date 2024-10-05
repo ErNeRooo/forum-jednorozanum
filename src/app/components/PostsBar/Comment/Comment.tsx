@@ -6,7 +6,7 @@ import DeleteCommentButton from "../../DeleteCommentButton/DeleteCommentButton";
 import Account from "@/app/types/Account";
 
 const Comment = ({
-  comment: { id, author, date, hour, offsetUTC, text, image },
+  comment: { id, author, date, hour, offsetUTC, text, imageUrl },
   userName,
   postId,
   account,
@@ -25,9 +25,9 @@ const Comment = ({
         )}
       </div>
       <div className={styles.content}>
-        {image && (
+        {imageUrl && (
           <div className={styles.image}>
-            <Image src={image} alt="post image" />
+            <Image src={imageUrl} alt="post image" />
           </div>
         )}
         <div className={styles.text}>{text}</div>

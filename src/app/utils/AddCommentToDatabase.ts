@@ -2,12 +2,12 @@ import CommentTypes from "../types/CommentTypes";
 import { fireDb } from "../firebaseConfig";
 import { updateDoc, doc } from "firebase/firestore";
 import GetPostByUid from "./GetPostByUid";
-import isDatabaseOperationSuccessfull from "../types/isDatabaseOperationSuccessfull";
+import result from "../types/isDatabaseOperationSuccessfull";
 
 const AddCommentToDatabase = async (
   postUid: string,
   comment: CommentTypes
-): Promise<isDatabaseOperationSuccessfull> => {
+): Promise<result> => {
   return await GetPostByUid(postUid)
     .then((post) => {
       updateDoc(doc(fireDb, "posts", postUid), {

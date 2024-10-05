@@ -7,5 +7,5 @@ interface CommentTypes {
   hour: string;
   offsetUTC: string;
   text: string;
-  image: string;
+  imageUrl: string;
 }

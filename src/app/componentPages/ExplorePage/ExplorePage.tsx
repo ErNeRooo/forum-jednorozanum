@@ -12,6 +12,7 @@ import { app } from "@/app/firebaseConfig";
 import { getAuth, User } from "firebase/auth";
 import Account from "@/app/types/Account";
 import CountPosts from "@/app/utils/CountPosts";
+import PageLoading from "@/app/components/PageLoading/PageLoading";
 
 const ExplorePage = () => {
   const user: User | null = getAuth(app).currentUser;
@@ -23,62 +24,70 @@ const ExplorePage = () => {
   const [account, setAccount] = useState<Account | null>(null);
   const [postsQuantityInCategory, setPostsQuantityInCategory] =
     useState<number>(0);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    if (!user) return;
-    GetAccountByUid(user.uid).then((account) => {
-      setAccount(account);
-    });
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    if (user) {
+      GetAccountByUid(user.uid).then((account) => {
+        if (!account) return;
+        setAccount(account);
+      });
+      setIsLoading(false);
+    }
   }, [user]);
 
   useEffect(() => {
-    CountPosts(currentCategory).then((postsQuantity) => {
-      setPostsQuantityInCategory(postsQuantity);
-    });
-  }, [currentCategory]);
+    if (user) {
+      CountPosts(currentCategory).then((postsQuantity) => {
+        setPostsQuantityInCategory(postsQuantity);
+      });
+    }
+  }, [currentCategory, user]);
 
-  return (
-    <div className={styles.ExplorePage}>
-      <CategoryPanel
-        currentCategory={currentCategory}
-        setCurrentCategory={setCurrentCategory}
-      />
-      <PostSearchPanel
-        searchPhrase={searchPhrase}
-        setSearchPhrase={setSearchPhrase}
-      />
-      {isCreatePostFormVisible && (
-        <FormForCreatingPosts
-          setIsFormVisible={setIsCreatePostFormVisible}
+  if (isLoading) {
+    return <PageLoading />;
+  } else {
+    return (
+      <div className={styles.ExplorePage}>
+        <CategoryPanel
           currentCategory={currentCategory}
-          setPosts={setPosts}
-          account={account}
-          setPostsQuantityInCategory={setPostsQuantityInCategory}
+          setCurrentCategory={setCurrentCategory}
         />
-      )}
-      <section className={styles.container}>
-        <h1 className={styles.title}>
-          <span className={styles.currentCategory}>{currentCategory}</span>
-          {` recent posts`}
-        </h1>
-        <CreatePostButton setIsFormVisible={setIsCreatePostFormVisible} />
-      </section>
-      <span>{`Found ${postsQuantityInCategory} ${
-        postsQuantityInCategory === 1 ? "post" : "posts"
-      } in ${currentCategory}`}</span>
-      <PostsBar
-        category={currentCategory}
-        posts={posts}
-        postsQuantityInCategory={postsQuantityInCategory}
-        setPosts={setPosts}
-        searchPhrase={searchPhrase}
-        setPostsQuantityInCategory={setPostsQuantityInCategory}
-        account={account}
-      />
-    </div>
-  );
+        <PostSearchPanel
+          searchPhrase={searchPhrase}
+          setSearchPhrase={setSearchPhrase}
+        />
+        {isCreatePostFormVisible && (
+          <FormForCreatingPosts
+            setIsFormVisible={setIsCreatePostFormVisible}
+            currentCategory={currentCategory}
+            setPosts={setPosts}
+            account={account}
+            setPostsQuantityInCategory={setPostsQuantityInCategory}
+          />
+        )}
+        <section className={styles.container}>
+          <h1 className={styles.title}>
+            <span className={styles.currentCategory}>{currentCategory}</span>
+            {` recent posts`}
+          </h1>
+          <CreatePostButton setIsFormVisible={setIsCreatePostFormVisible} />
+        </section>
+        <span>{`Found ${postsQuantityInCategory} ${
+          postsQuantityInCategory === 1 ? "post" : "posts"
+        } in ${currentCategory}`}</span>
+        <PostsBar
+          category={currentCategory}
+          posts={posts}
+          postsQuantityInCategory={postsQuantityInCategory}
+          setPosts={setPosts}
+          searchPhrase={searchPhrase}
+          setPostsQuantityInCategory={setPostsQuantityInCategory}
+          account={account}
+        />
+      </div>
+    );
+  }
 };
 
 export default ExplorePage;

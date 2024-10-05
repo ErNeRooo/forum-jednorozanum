@@ -6,14 +6,14 @@ import {
 } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 import CheckIfNameIsOccupied from "./CheckIfNameIsOccupied";
-import isDatabaseOperationSuccessfull from "../types/isDatabaseOperationSuccessfull";
+import result from "../types/isDatabaseOperationSuccessfull";
 import Account from "../types/Account";
 
 const AddAccountToDatabase = async (
   name: string,
   email: string,
   password: string
-): Promise<isDatabaseOperationSuccessfull> => {
+): Promise<result> => {
   const nameIsOccupied = await CheckIfNameIsOccupied(name).then(
     (nameIsOccupied) => {
       if (nameIsOccupied) {
@@ -29,7 +29,6 @@ const AddAccountToDatabase = async (
   ).then(() => {
     return createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        console.log(userCredential);
         const user = userCredential.user;
         const userDoc = doc(fireDb, "accounts", user.uid);
 
