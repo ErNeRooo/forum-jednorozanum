@@ -4,8 +4,8 @@ import GetAccountByUid from "./GetAccountByUid";
 import FormatDate from "./FormatDate";
 import GenerateRandomString from "./GenerateRandomString";
 import AddFileToDatabase from "./AddFileToDatabase";
-import { getStorage, ref, getDownloadURL } from "firebase/storage";
-import { app } from "../firebaseConfig";
+import { ref } from "firebase/storage";
+import { storage } from "../firebaseConfig";
 
 const CreatePost = (
   userUid: string,
@@ -35,7 +35,6 @@ const CreatePost = (
       miliseconds,
     } = FormatDate(date);
 
-    const storage = getStorage(app);
     const imageUniqueName = image
       ? `${GenerateRandomString(
           "0123456789ABCDSEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",

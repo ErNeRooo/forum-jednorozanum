@@ -5,14 +5,22 @@ import Image from "next/image";
 import DeletePostFromDatabase from "@/app/utils/DeletePostFromDatabase";
 import deleteIcon from "../../../../public/deleteIcon.svg";
 import DeleteCommentFromDatabase from "@/app/utils/DeleteCommentFromDatabase";
+import DeleteFileFromDatabase from "@/app/utils/DeleteFileFromDatabase";
 
-const DeleteCommentButton = ({ postUid, commentUid, setPosts }: Props) => {
+const DeleteCommentButton = ({
+  postUid,
+  commentUid,
+  imageUrl,
+  setPosts,
+}: Props) => {
   const [filter, setFilter] = useState<string>(
     "invert(47%) sepia(67%) saturate(566%) hue-rotate(73deg) brightness(97%) contrast(83%)"
   );
   const handleOnClick = (): void => {
     DeleteCommentFromDatabase(postUid, commentUid).then(
       ({ isSuccessfull, errorMessage }) => {
+        if (imageUrl !== "") DeleteFileFromDatabase(imageUrl);
+
         if (isSuccessfull) {
           setPosts((prev: PostTypes[]) => {
             return prev.flatMap((post) => {
@@ -56,6 +64,7 @@ const DeleteCommentButton = ({ postUid, commentUid, setPosts }: Props) => {
 interface Props {
   postUid: string;
   commentUid: string;
+  imageUrl: string;
   setPosts: React.Dispatch<React.SetStateAction<PostTypes[]>>;
 }
 

@@ -1,7 +1,7 @@
 import { fireDb } from "../firebaseConfig";
 import { collection, setDoc, doc } from "firebase/firestore";
 import PostTypes from "../types/PostTypes";
-import result from "../types/isDatabaseOperationSuccessfull";
+import result from "../types/result";
 
 const AddPostToDatabase = async (post: PostTypes): Promise<result> => {
   const {

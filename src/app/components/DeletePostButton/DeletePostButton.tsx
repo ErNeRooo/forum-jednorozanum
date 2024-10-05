@@ -4,9 +4,11 @@ import PostTypes from "@/app/types/PostTypes";
 import Image from "next/image";
 import deleteIcon from "../../../../public/deleteIcon.svg";
 import { CSSProperties, useState } from "react";
+import DeleteFileFromDatabase from "@/app/utils/DeleteFileFromDatabase";
 
 const DeletePostButton = ({
   postUid,
+  imageUrl,
   setPosts,
   setPostsQuantityInCategory,
 }: Props) => {
@@ -15,6 +17,8 @@ const DeletePostButton = ({
   );
   const handleOnClick = (): void => {
     DeletePostFromDatabase(postUid).then(({ isSuccessfull, errorMessage }) => {
+      if (imageUrl !== "") DeleteFileFromDatabase(imageUrl);
+
       if (isSuccessfull) {
         setPosts((prev) => prev.filter((post) => post.id !== postUid));
         setPostsQuantityInCategory((prev) => prev - 1);
@@ -47,6 +51,7 @@ const DeletePostButton = ({
 
 interface Props {
   postUid: string;
+  imageUrl: string;
   setPosts: React.Dispatch<React.SetStateAction<PostTypes[]>>;
   setPostsQuantityInCategory: React.Dispatch<React.SetStateAction<number>>;
 }

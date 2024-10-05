@@ -4,8 +4,8 @@ import FormatDate from "./FormatDate";
 import AddCommentToDatabase from "./AddCommentToDatabase";
 import CommentTypes from "../types/CommentTypes";
 import GenerateRandomString from "./GenerateRandomString";
-import { app } from "../firebaseConfig";
-import { getStorage, ref } from "firebase/storage";
+import { storage } from "../firebaseConfig";
+import { ref } from "firebase/storage";
 import AddFileToDatabase from "./AddFileToDatabase";
 
 const CreateComment = (
@@ -40,7 +40,6 @@ const CreateComment = (
       miliseconds,
     } = FormatDate(date);
 
-    const storage = getStorage(app);
     const imageUniqueName = image
       ? `${GenerateRandomString(
           "0123456789ABCDSEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",

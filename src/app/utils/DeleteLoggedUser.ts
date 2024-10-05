@@ -1,5 +1,5 @@
 import { deleteUser, getAuth, User } from "firebase/auth";
-import result from "../types/isDatabaseOperationSuccessfull";
+import result from "../types/result";
 import { deleteDoc, doc } from "firebase/firestore";
 import { fireDb } from "../firebaseConfig";
 

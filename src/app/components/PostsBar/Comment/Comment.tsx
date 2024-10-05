@@ -20,6 +20,7 @@ const Comment = ({
           <DeleteCommentButton
             postUid={postId}
             commentUid={id as string}
+            imageUrl={imageUrl}
             setPosts={setPosts}
           />
         )}

@@ -55,6 +55,7 @@ const Post = ({
             {(userName === author || account?.role === "admin") && (
               <DeletePostButton
                 postUid={id}
+                imageUrl={imageUrl}
                 setPosts={setPosts}
                 setPostsQuantityInCategory={setPostsQuantityInCategory}
               />

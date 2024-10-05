@@ -1,7 +1,7 @@
 import { fireDb } from "../firebaseConfig";
 import { updateDoc, doc } from "firebase/firestore";
 import GetPostByUid from "./GetPostByUid";
-import result from "../types/isDatabaseOperationSuccessfull";
+import result from "../types/result";
 
 const DeleteCommentFromDatabase = async (
   postUid: string,

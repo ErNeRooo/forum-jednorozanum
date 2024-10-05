@@ -6,7 +6,7 @@ import {
 } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 import CheckIfNameIsOccupied from "./CheckIfNameIsOccupied";
-import result from "../types/isDatabaseOperationSuccessfull";
+import result from "../types/result";
 import Account from "../types/Account";
 
 const AddAccountToDatabase = async (

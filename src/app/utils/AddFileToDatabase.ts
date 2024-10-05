@@ -5,7 +5,7 @@ import {
   StorageReference,
   uploadBytes,
 } from "firebase/storage";
-import result from "../types/isDatabaseOperationSuccessfull";
+import result from "../types/result";
 
 const AddFileToDatabase = async (
   file: File | null,

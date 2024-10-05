@@ -1,4 +1,4 @@
-import result from "../types/isDatabaseOperationSuccessfull";
+import result from "../types/result";
 import { fireDb } from "../firebaseConfig";
 import { updateDoc, doc } from "firebase/firestore";
 

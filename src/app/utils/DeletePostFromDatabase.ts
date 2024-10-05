@@ -1,6 +1,6 @@
 import { fireDb } from "../firebaseConfig";
 import { doc, deleteDoc } from "firebase/firestore";
-import result from "../types/isDatabaseOperationSuccessfull";
+import result from "../types/result";
 
 const DeletePostFromDatabase = async (uid: string): Promise<result> => {
   return await deleteDoc(doc(fireDb, "posts", uid))
