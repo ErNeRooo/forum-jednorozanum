@@ -1,5 +1,12 @@
 "use client";
-import { CSSProperties, useEffect, useRef, useState } from "react";
+import {
+  BaseSyntheticEvent,
+  CSSProperties,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { getAuth, User } from "firebase/auth";
 import styles from "./FormForCreatingPosts.module.sass";
 import { app } from "@/app/firebaseConfig";
@@ -8,6 +15,7 @@ import Loader from "../Loader/Loader";
 import PostTypes from "@/app/types/PostTypes";
 import CreatePost from "@/app/utils/CreatePost";
 import Account from "@/app/types/Account";
+import AttachFileButton from "../AttachFileButton/AttachFileButton";
 
 const FormForCreatingPosts = ({
   setIsFormVisible,
@@ -24,6 +32,8 @@ const FormForCreatingPosts = ({
   const [currentDate, setCurrentDate] = useState(new Date());
   const [offsetUTC, setOffsetUTC] = useState<string>("");
   const textAreaRef = useRef<HTMLTextAreaElement | null>(null);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const memoCurrentDate = useMemo(() => currentDate, [currentDate]);
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -76,18 +86,22 @@ const FormForCreatingPosts = ({
         <section className={styles.formHeader}>
           <span className={styles.title}>{`${
             account?.name
-          } | ${currentCategory} | ${currentDate.toLocaleTimeString()} | ${currentDate.toLocaleDateString()} | ${offsetUTC} 
+          } | ${currentCategory} | ${memoCurrentDate.toLocaleTimeString()} | ${memoCurrentDate.toLocaleDateString()} | ${offsetUTC} 
           `}</span>
           <span className={styles.counter}>{`${text.length}/500`}</span>
         </section>
         <textarea
-          className={styles.input}
+          className={styles.text}
           placeholder={"Write something..."}
           onChange={(e) => setText(e.target.value)}
           value={text}
           maxLength={500}
           ref={textAreaRef}
         />
+        <section className={styles.attachmentBar}>
+          <AttachFileButton setSelectedFile={setSelectedFile} />
+          <span className={styles.uploadedFiles}>{selectedFile?.name}</span>
+        </section>
         <section className={styles.buttonsContainer}>
           <div onClick={handleCancelOnClick} className={styles.button}>
             Cancel
