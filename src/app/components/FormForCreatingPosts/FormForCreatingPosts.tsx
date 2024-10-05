@@ -1,5 +1,5 @@
 "use client";
-import { CSSProperties, useEffect, useState } from "react";
+import { CSSProperties, useEffect, useRef, useState } from "react";
 import { getAuth, User } from "firebase/auth";
 import styles from "./FormForCreatingPosts.module.sass";
 import { app } from "@/app/firebaseConfig";
@@ -7,7 +7,6 @@ import CreatePostErrorPopup from "../CreatePostErrorPopup/CreatePostErrorPopup";
 import Loader from "../Loader/Loader";
 import PostTypes from "@/app/types/PostTypes";
 import CreatePost from "@/app/utils/CreatePost";
-import GetAccountByUid from "@/app/utils/GetAccountByUid";
 import Account from "@/app/types/Account";
 
 const FormForCreatingPosts = ({
@@ -24,6 +23,7 @@ const FormForCreatingPosts = ({
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [currentDate, setCurrentDate] = useState(new Date());
   const [offsetUTC, setOffsetUTC] = useState<string>("");
+  const textAreaRef = useRef<HTMLTextAreaElement | null>(null);
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -36,6 +36,8 @@ const FormForCreatingPosts = ({
         ? `UTC +${Math.abs(timezoneOffset / 60)}`
         : `UTC -${timezoneOffset / 60}`
     );
+
+    textAreaRef.current?.focus();
 
     return () => clearInterval(intervalId);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -84,6 +86,7 @@ const FormForCreatingPosts = ({
           onChange={(e) => setText(e.target.value)}
           value={text}
           maxLength={500}
+          ref={textAreaRef}
         />
         <section className={styles.buttonsContainer}>
           <div onClick={handleCancelOnClick} className={styles.button}>

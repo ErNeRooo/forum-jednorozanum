@@ -9,11 +9,11 @@ const FormatDate = (date: Date) => {
   const miliseconds = date.getMilliseconds();
 
   const formatedYear = year;
-  const formatedMonth = month > 10 ? month : `0${month}`;
-  const formatedDay = day > 10 ? day : `0${day}`;
-  const formatedHours = hours > 10 ? hours : `0${hours}`;
-  const formatedMinutes = minutes > 10 ? minutes : `0${minutes}`;
-  const formatedSeconds = seconds > 10 ? seconds : `0${seconds}`;
+  const formatedMonth = month > 9 ? month : `0${month}`;
+  const formatedDay = day > 9 ? day : `0${day}`;
+  const formatedHours = hours > 9 ? hours : `0${hours}`;
+  const formatedMinutes = minutes > 9 ? minutes : `0${minutes}`;
+  const formatedSeconds = seconds > 9 ? seconds : `0${seconds}`;
   const formatedOffsetUTC =
     offsetUTC < 0 ? `+${Math.abs(offsetUTC) / 60}` : `-${offsetUTC / 60}`;
 

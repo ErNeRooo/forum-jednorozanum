@@ -14,7 +14,7 @@ import Account from "@/app/types/Account";
 import CountPosts from "@/app/utils/CountPosts";
 
 const ExplorePage = () => {
-  const user: User = getAuth(app).currentUser as User;
+  const user: User | null = getAuth(app).currentUser;
   const [searchPhrase, setSearchPhrase] = useState<string>("");
   const [posts, setPosts] = useState<PostTypes[]>([]);
   const [currentCategory, setCurrentCategory] = useState<string>("All");
@@ -25,12 +25,13 @@ const ExplorePage = () => {
     useState<number>(0);
 
   useEffect(() => {
+    if (!user) return;
     GetAccountByUid(user.uid).then((account) => {
       setAccount(account);
     });
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [user]);
 
   useEffect(() => {
     CountPosts(currentCategory).then((postsQuantity) => {

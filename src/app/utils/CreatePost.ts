@@ -2,6 +2,7 @@ import PostTypes from "../types/PostTypes";
 import AddPostToDatabase from "./AddPostToDatabase";
 import GetAccountByUid from "./GetAccountByUid";
 import FormatDate from "./FormatDate";
+import GenerateRandomString from "./GenerateRandomString";
 
 const CreatePost = (
   userUid: string,
@@ -29,6 +30,13 @@ const CreatePost = (
     } = FormatDate(date);
 
     const post: PostTypes = {
+      id: `${
+        account.name
+      }${year}${month}${day}${hours}${minutes}${seconds}${miliseconds}${GenerateRandomString(
+        "0123456789ABCDSEFGHIJKLMNOPQRSTUVWXYZ",
+        4,
+        4
+      )}`,
       // date
       year: year,
       month: month,
@@ -50,10 +58,10 @@ const CreatePost = (
 
     AddPostToDatabase(post)
       .then(() => {
-        setPosts((posts) => [post, ...posts]);
         setPostsQuantityInCategory((prev) => prev + 1);
         setIsFormVisible(false);
         setIsLoading(false);
+        setPosts((prev) => [post, ...prev]);
       })
       .catch((error) => {
         setIsLoading(false);

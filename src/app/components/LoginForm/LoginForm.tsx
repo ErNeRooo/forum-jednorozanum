@@ -6,7 +6,7 @@ import LogInAccount from "@/app/utils/LogInAccount";
 import HideString from "@/app/utils/HideString";
 import { useRouter } from "next/navigation";
 
-const LoginForm = ({ dispatch, ExitForm }: Props) => {
+const LoginForm = ({ dispatch, ExitForm, setIsLoading }: Props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isInputVisible, setIsInputVisible] = useState(true);
@@ -58,8 +58,7 @@ const LoginForm = ({ dispatch, ExitForm }: Props) => {
           });
 
           setTimeout(() => {
-            console.log("redirecting...");
-
+            setIsLoading(true);
             router.push("/explore");
           }, 3000);
         } else {
@@ -114,6 +113,7 @@ const LoginForm = ({ dispatch, ExitForm }: Props) => {
 interface Props {
   dispatch: React.Dispatch<Action>;
   ExitForm: () => void;
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export default LoginForm;

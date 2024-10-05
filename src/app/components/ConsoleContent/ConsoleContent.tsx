@@ -8,7 +8,7 @@ import LoginForm from "../LoginForm/LoginForm";
 import RegisterForm from "../RegisterForm/RegisterForm";
 import PickPromptAnswer from "@/app/utils/PickPromptAnswer";
 
-const ConsoleContent = () => {
+const ConsoleContent = ({ setIsLoading }: Props) => {
   const [consoleHistory, dispatch] = useReducer(cmdInputReducer, [
     <span key={0}>{"HexOS PowerShell"}</span>,
     <span key={1}>
@@ -88,7 +88,11 @@ const ConsoleContent = () => {
           consoleTitle: "PS C:\\forum-jednorozanum>",
         });
         setCurrentConsoleInput(
-          <LoginForm dispatch={dispatch} ExitForm={() => setDefaultInput()} />
+          <LoginForm
+            dispatch={dispatch}
+            ExitForm={() => setDefaultInput()}
+            setIsLoading={setIsLoading}
+          />
         );
         break;
 
@@ -102,6 +106,7 @@ const ConsoleContent = () => {
           <RegisterForm
             dispatch={dispatch}
             ExitForm={() => setDefaultInput()}
+            setIsLoading={setIsLoading}
           />
         );
         break;
@@ -133,5 +138,9 @@ const ConsoleContent = () => {
     </div>
   );
 };
+
+interface Props {
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
+}
 
 export default ConsoleContent;

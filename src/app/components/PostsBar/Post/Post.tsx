@@ -54,14 +54,14 @@ const Post = ({
             />
             {(userName === author || account?.role === "admin") && (
               <DeletePostButton
-                postUid={id as string}
+                postUid={id}
                 setPosts={setPosts}
                 setPostsQuantityInCategory={setPostsQuantityInCategory}
               />
             )}
             {account?.role === "admin" && (
               <PinPostButton
-                postUid={id as string}
+                postUid={id}
                 isPinned={isPinnedState}
                 setIsPinned={setIsPinnedState}
                 setPosts={setPosts}
@@ -85,7 +85,7 @@ const Post = ({
             key={comment.id}
             comment={comment}
             userName={userName}
-            postId={id as string}
+            postId={id}
             setPosts={setPosts}
             account={account}
           />
@@ -96,7 +96,7 @@ const Post = ({
           setIsFormVisible={setIsFormForCreatingCommentsVisible}
           setPosts={setPosts}
           userName={userName}
-          postUid={id as string}
+          postUid={id}
         />
       )}
     </>

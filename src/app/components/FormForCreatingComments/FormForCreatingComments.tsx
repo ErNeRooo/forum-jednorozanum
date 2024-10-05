@@ -1,13 +1,11 @@
 "use client";
-import { CSSProperties, useEffect, useState } from "react";
+import { CSSProperties, useEffect, useRef, useState } from "react";
 import { getAuth, User } from "firebase/auth";
 import styles from "./FormForCreatingComments.module.sass";
 import { app } from "@/app/firebaseConfig";
 import CreatePostErrorPopup from "../CreatePostErrorPopup/CreatePostErrorPopup";
 import Loader from "../Loader/Loader";
 import PostTypes from "@/app/types/PostTypes";
-import CreatePost from "@/app/utils/CreatePost";
-import Account from "@/app/types/Account";
 import CreateComment from "@/app/utils/CreateComment";
 
 const FormForCreatingComments = ({
@@ -23,6 +21,7 @@ const FormForCreatingComments = ({
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [currentDate, setCurrentDate] = useState(new Date());
   const [offsetUTC, setOffsetUTC] = useState<string>("");
+  const textAreaRef = useRef<HTMLTextAreaElement | null>(null);
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -35,6 +34,8 @@ const FormForCreatingComments = ({
         ? `UTC +${Math.abs(timezoneOffset / 60)}`
         : `UTC -${timezoneOffset / 60}`
     );
+
+    textAreaRef.current?.focus();
 
     return () => clearInterval(intervalId);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -84,6 +85,7 @@ const FormForCreatingComments = ({
           onChange={(e) => setText(e.target.value)}
           value={text}
           maxLength={500}
+          ref={textAreaRef}
         />
         <section className={styles.buttonsContainer}>
           <div onClick={handleCancelOnClick} className={styles.button}>

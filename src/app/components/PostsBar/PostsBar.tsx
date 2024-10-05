@@ -45,8 +45,6 @@ const PostsBar = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [category]);
 
-  useEffect(() => {}, []);
-
   const loaderStyle: CSSProperties = {
     position: "relative",
     display: "flex",
@@ -77,12 +75,10 @@ const PostsBar = ({
     <div className={styles.PostsBar}>
       {posts
         .filter((post) => post.text.includes(searchPhrase))
-        .map((post, index) => {
-          console.log(post.id);
-          posts.length === index + 1 && console.log("---");
+        .map((post) => {
           return (
             <Post
-              key={post.id as string}
+              key={post.id}
               post={post}
               setPosts={setPosts}
               userName={userName}

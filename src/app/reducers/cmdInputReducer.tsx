@@ -110,6 +110,12 @@ const CmdInputReducer = (
     >{`Siema, nazywam się Piotr Świderski, zamieszkuję ulicę długą w gminnej miejscowość Jednorożec, znajdującej się w powiecie przasnyskim w województwie Mazowiecki. Uczęszczam do 1 klasy LO z kierunkiem polonistycznym. Kocham kobiety, ale one mnie nie. Kiedy się denerwuję pocą mi się nogi i śmierdzę wtedy jak ryba. Jestem popularny na lokalnej komendzie.`}</span>
   );
 
+  const WriteMessage = () => (
+    <span key={state.length + 1} className={styles.response}>
+      {value}
+    </span>
+  );
+
   const currentInput: ReactElement = (
     <span key={state.length}>{`${consoleTitle} ${fullPrompt}`}</span>
   );

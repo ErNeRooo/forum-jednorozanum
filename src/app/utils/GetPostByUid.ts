@@ -3,6 +3,7 @@ import { doc, getDoc } from "firebase/firestore";
 import PostTypes from "../types/PostTypes";
 
 const GetPostByUid = (postUid: string): Promise<PostTypes> => {
+  console.log("GetPostByUid: " + postUid);
   return getDoc(doc(fireDb, "posts", postUid)).then((doc) => {
     const {
       year,

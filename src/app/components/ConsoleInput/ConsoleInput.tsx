@@ -26,7 +26,6 @@ const ConsoleInput = ({
 
     if (e.key === "Enter" && e.currentTarget.value !== "") {
       setHistory([e.currentTarget.value, ...history]);
-      console.log(history);
     } else if (e.key === "ArrowUp" && history.length > 0) {
       countArrowClicks < history.length - 1
         ? countArrowClicks++
@@ -51,6 +50,7 @@ const ConsoleInput = ({
     <div className={styles.ConsoleInput}>
       <span>{consoleText}</span>
       <input
+        className={styles.input}
         type={type}
         onKeyDown={handleOnChange}
         ref={inputRef}

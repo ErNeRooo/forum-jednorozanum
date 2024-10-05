@@ -3,7 +3,7 @@ import CommentTypes from "./CommentTypes";
 export default PostTypes;
 
 interface PostTypes {
-  id?: string;
+  id: string;
   //date
   year: string;
   month: string;

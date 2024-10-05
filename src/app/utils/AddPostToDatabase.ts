@@ -1,5 +1,5 @@
 import { fireDb } from "../firebaseConfig";
-import { collection, addDoc } from "firebase/firestore";
+import { collection, setDoc, doc } from "firebase/firestore";
 import PostTypes from "../types/PostTypes";
 import isDatabaseOperationSuccessfull from "../types/isDatabaseOperationSuccessfull";
 
@@ -7,6 +7,7 @@ const AddPostToDatabase = async (
   post: PostTypes
 ): Promise<isDatabaseOperationSuccessfull> => {
   const {
+    id,
     year,
     month,
     day,
@@ -20,8 +21,12 @@ const AddPostToDatabase = async (
     category,
     image,
     comments,
+    isPinned,
   } = post;
-  return await addDoc(collection(fireDb, "posts"), {
+
+  const docRef = doc(fireDb, "posts", id);
+
+  return await setDoc(docRef, {
     // date
     year: year,
     month: month,
@@ -38,6 +43,7 @@ const AddPostToDatabase = async (
     category: category,
     image: image,
     comments: comments,
+    isPinned: isPinned,
   })
     .then(() => {
       return {

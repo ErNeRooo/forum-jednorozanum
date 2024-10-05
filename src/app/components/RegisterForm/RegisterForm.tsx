@@ -5,7 +5,7 @@ import HideString from "@/app/utils/HideString";
 import AddAccountToDatabase from "@/app/utils/AddAccountToDatabase";
 import { useRouter } from "next/navigation";
 
-const RegisterForm = ({ dispatch, ExitForm }: Props) => {
+const RegisterForm = ({ dispatch, ExitForm, setIsLoading }: Props) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -94,6 +94,7 @@ const RegisterForm = ({ dispatch, ExitForm }: Props) => {
                 consoleTitle: inputText,
               });
 
+              setIsLoading(true);
               router.push("/explore");
             } else if (errorMessage === "name already in use") {
               dispatch({
@@ -151,6 +152,7 @@ const RegisterForm = ({ dispatch, ExitForm }: Props) => {
 interface Props {
   dispatch: React.Dispatch<Action>;
   ExitForm: () => void;
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export default RegisterForm;

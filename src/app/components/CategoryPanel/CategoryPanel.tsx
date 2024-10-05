@@ -4,15 +4,16 @@ import styles from "./CategoryPanel.module.sass";
 import GetAccountCategories from "@/app/utils/GetAccountCategories";
 
 const CategoryPanel = ({ currentCategory, setCurrentCategory }: Props) => {
-  const user = getAuth().currentUser as User;
+  const user: User | null = getAuth().currentUser;
   const [categories, setCategories] = useState<string[]>([]);
 
   useEffect(() => {
+    if (!user) return;
     GetAccountCategories(user.uid).then((Categories) => {
       setCategories(Categories);
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [user]);
 
   return (
     <div className={styles.CategoryPanel}>

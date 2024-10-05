@@ -3,6 +3,7 @@ import GetAccountByUid from "./GetAccountByUid";
 import FormatDate from "./FormatDate";
 import AddCommentToDatabase from "./AddCommentToDatabase";
 import CommentTypes from "../types/CommentTypes";
+import GenerateRandomString from "./GenerateRandomString";
 
 const CreateComment = (
   postUid: string,
@@ -33,9 +34,11 @@ const CreateComment = (
     const comment: CommentTypes = {
       id: `${
         account.name
-      }${year}${month}${day}${hours}${minutes}${seconds}${miliseconds}${
-        Math.random() * 100
-      }`,
+      }${year}${month}${day}${hours}${minutes}${seconds}${miliseconds}${GenerateRandomString(
+        "0123456789ABCDSEFGHIJKLMNOPQRSTUVWXYZ",
+        4,
+        4
+      )}`,
       author: account.name,
       date: `${year}-${month}-${day}`,
       hour: `${hours}:${minutes}:${seconds}`,
@@ -64,6 +67,7 @@ const CreateComment = (
         setIsLoading(false);
         setIsCreatePostErrorPopupVisible(true);
         console.error(error);
+        console.log("CreateComment: " + postUid);
 
         setTimeout(() => {
           setIsCreatePostErrorPopupVisible(false);

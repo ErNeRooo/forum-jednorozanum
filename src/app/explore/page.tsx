@@ -25,7 +25,6 @@ const Explore = () => {
   }
 
   if (user) {
-    console.log(user);
     return <ExplorePage />;
   } else {
     return <NotLoggedInPage />;

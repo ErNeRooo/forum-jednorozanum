@@ -1,7 +1,7 @@
 export default CommentTypes;
 
 interface CommentTypes {
-  id?: string;
+  id: string;
   author: string;
   date: string;
   hour: string;
