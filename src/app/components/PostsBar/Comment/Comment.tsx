@@ -27,7 +27,12 @@ const Comment = ({
       <div className={styles.content}>
         {imageUrl && (
           <div className={styles.image}>
-            <Image src={imageUrl} alt="post image" />
+            <Image
+              src={imageUrl}
+              alt="post image"
+              fill={true}
+              style={{ objectFit: "contain" }}
+            />
           </div>
         )}
         <div className={styles.text}>{text}</div>

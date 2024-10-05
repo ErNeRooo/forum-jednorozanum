@@ -4,11 +4,15 @@ import FormatDate from "./FormatDate";
 import AddCommentToDatabase from "./AddCommentToDatabase";
 import CommentTypes from "../types/CommentTypes";
 import GenerateRandomString from "./GenerateRandomString";
+import { app } from "../firebaseConfig";
+import { getStorage, ref } from "firebase/storage";
+import AddFileToDatabase from "./AddFileToDatabase";
 
 const CreateComment = (
   postUid: string,
   userUid: string,
   text: string,
+  image: File | null,
   setIsFormVisible: React.Dispatch<React.SetStateAction<boolean>>,
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
   setIsCreatePostErrorPopupVisible: React.Dispatch<
@@ -36,6 +40,15 @@ const CreateComment = (
       miliseconds,
     } = FormatDate(date);
 
+    const storage = getStorage(app);
+    const imageUniqueName = image
+      ? `${GenerateRandomString(
+          "0123456789ABCDSEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",
+          10,
+          10
+        )}_${day}-${month}-${year}`
+      : "";
+
     const comment: CommentTypes = {
       id: `${
         account.name
@@ -52,7 +65,24 @@ const CreateComment = (
       imageUrl: "",
     };
 
-    AddCommentToDatabase(postUid, comment)
+    const storageRef = ref(storage, `images/${imageUniqueName}`);
+
+    AddFileToDatabase(image, storageRef)
+      .then((result) => {
+        if (result.isSuccessfull) {
+          comment.imageUrl = result.downloadUrl ? result.downloadUrl : "";
+
+          AddCommentToDatabase(postUid, comment).then((result) => {
+            if (!result.isSuccessfull) {
+              console.error(result.errorMessage);
+              return Promise.resolve();
+            }
+          });
+        } else {
+          console.error(result.errorMessage);
+          return Promise.resolve();
+        }
+      })
       .then(() => {
         setPosts((prev: PostTypes[]) => {
           return prev.flatMap((post) => {

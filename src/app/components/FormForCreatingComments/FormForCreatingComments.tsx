@@ -7,6 +7,7 @@ import CreatePostErrorPopup from "../CreatePostErrorPopup/CreatePostErrorPopup";
 import Loader from "../Loader/Loader";
 import PostTypes from "@/app/types/PostTypes";
 import CreateComment from "@/app/utils/CreateComment";
+import AttachFileButton from "../AttachFileButton/AttachFileButton";
 
 const FormForCreatingComments = ({
   setIsFormVisible,
@@ -22,6 +23,7 @@ const FormForCreatingComments = ({
   const [currentDate, setCurrentDate] = useState(new Date());
   const [offsetUTC, setOffsetUTC] = useState<string>("");
   const textAreaRef = useRef<HTMLTextAreaElement | null>(null);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -48,6 +50,7 @@ const FormForCreatingComments = ({
       postUid,
       user.uid,
       text,
+      selectedFile,
       setIsFormVisible,
       setIsLoading,
       setIsCreatePostErrorPopupVisible,
@@ -87,6 +90,10 @@ const FormForCreatingComments = ({
           maxLength={500}
           ref={textAreaRef}
         />
+        <section className={styles.attachmentBar}>
+          <AttachFileButton setSelectedFile={setSelectedFile} />
+          <span className={styles.uploadedFiles}>{selectedFile?.name}</span>
+        </section>
         <section className={styles.buttonsContainer}>
           <div onClick={handleCancelOnClick} className={styles.button}>
             Cancel
