@@ -51,7 +51,7 @@ const PostsBar = ({
       });
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [posts]);
+  }, [setPosts]);
 
   const loaderStyle: CSSProperties = {
     position: "relative",

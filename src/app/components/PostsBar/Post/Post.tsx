@@ -8,6 +8,7 @@ import CreateCommentButton from "../../CreateCommentButton/CreateCommentButton";
 import DeletePostButton from "../../DeletePostButton/DeletePostButton";
 import Account from "@/app/types/Account";
 import PinPostButton from "../../PinPostButton/PinPostButton";
+import CommentsVisibilityButton from "../../CommentsVisibilityButton/CommentsVisibilityButton";
 
 const Post = ({
   post: {
@@ -37,6 +38,7 @@ const Post = ({
     setIsFormForCreatingCommentsVisible,
   ] = useState(false);
   const [isPinnedState, setIsPinnedState] = useState(isPinned);
+  const [isCommentsVisible, setIsCommentsVisible] = useState(false);
 
   return (
     <>
@@ -83,17 +85,25 @@ const Post = ({
         </div>
       </div>
       <div className={styles.comments}>
-        {comments.map((comment) => (
-          <Comment
-            key={comment.id}
-            comment={comment}
-            userName={userName}
-            postId={id}
-            setPosts={setPosts}
-            account={account}
-          />
-        ))}
+        {isCommentsVisible
+          ? comments.map((comment) => (
+              <Comment
+                key={comment.id}
+                comment={comment}
+                userName={userName}
+                postId={id}
+                setPosts={setPosts}
+                account={account}
+              />
+            ))
+          : null}
       </div>
+      {comments.length > 0 && (
+        <CommentsVisibilityButton
+          setIsCommentsVisible={setIsCommentsVisible}
+          isCommentsVisible={isCommentsVisible}
+        />
+      )}
       {isFormForCreatingCommentsVisible && (
         <FormForCreatingComments
           setIsFormVisible={setIsFormForCreatingCommentsVisible}
