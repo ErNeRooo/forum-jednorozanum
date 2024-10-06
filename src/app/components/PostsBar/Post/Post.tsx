@@ -9,6 +9,7 @@ import DeletePostButton from "../../DeletePostButton/DeletePostButton";
 import Account from "@/app/types/Account";
 import PinPostButton from "../../PinPostButton/PinPostButton";
 import CommentsVisibilityButton from "../../CommentsVisibilityButton/CommentsVisibilityButton";
+import ExpandableImage from "../../ExpandableImage/ExpandableImage";
 
 const Post = ({
   post: {
@@ -71,16 +72,7 @@ const Post = ({
           </div>
         </div>
         <div className={styles.content}>
-          {imageUrl && (
-            <div className={styles.image}>
-              <Image
-                src={imageUrl}
-                alt="post image"
-                fill={true}
-                style={{ objectFit: "contain" }}
-              />
-            </div>
-          )}
+          {imageUrl && <ExpandableImage imageUrl={imageUrl} />}
 
           <div className={styles.text}>{text}</div>
         </div>

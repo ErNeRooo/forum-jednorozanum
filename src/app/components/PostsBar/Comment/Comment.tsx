@@ -4,6 +4,7 @@ import CommentTypes from "@/app/types/CommentTypes";
 import PostTypes from "@/app/types/PostTypes";
 import DeleteCommentButton from "../../DeleteCommentButton/DeleteCommentButton";
 import Account from "@/app/types/Account";
+import ExpandableImage from "../../ExpandableImage/ExpandableImage";
 
 const Comment = ({
   comment: { id, author, date, hour, offsetUTC, text, imageUrl },
@@ -26,16 +27,7 @@ const Comment = ({
         )}
       </div>
       <div className={styles.content}>
-        {imageUrl && (
-          <div className={styles.image}>
-            <Image
-              src={imageUrl}
-              alt="post image"
-              fill={true}
-              style={{ objectFit: "contain" }}
-            />
-          </div>
-        )}
+        {imageUrl && <ExpandableImage imageUrl={imageUrl} />}
         <div className={styles.text}>{text}</div>
       </div>
     </div>
