@@ -78,7 +78,7 @@ const Post = ({
         </div>
       </div>
       <div className={styles.comments}>
-        {isCommentsVisible
+        {isCommentsVisible && comments !== undefined
           ? comments.map((comment) => (
               <Comment
                 key={comment.id}

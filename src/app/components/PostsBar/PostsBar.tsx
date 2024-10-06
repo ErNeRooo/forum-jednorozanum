@@ -81,20 +81,21 @@ const PostsBar = ({
 
   return (
     <div className={styles.PostsBar}>
-      {posts
-        .filter((post) => post.text.includes(searchPhrase))
-        .map((post) => {
-          return (
-            <Post
-              key={post.id}
-              post={post}
-              setPosts={setPosts}
-              userName={userName}
-              setPostsQuantityInCategory={setPostsQuantityInCategory}
-              account={account}
-            />
-          );
-        })}
+      {posts.length !== undefined &&
+        posts
+          .filter((post) => post.text.includes(searchPhrase))
+          .map((post) => {
+            return (
+              <Post
+                key={post.id}
+                post={post}
+                setPosts={setPosts}
+                userName={userName}
+                setPostsQuantityInCategory={setPostsQuantityInCategory}
+                account={account}
+              />
+            );
+          })}
 
       {postsQuantityInCategory > posts.length && (
         <SeeMorePostsButton

@@ -4,9 +4,11 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev && next export",
     "build": "next build",
-    "test": "jest"
+    "test": "jest",
+    "export": "next export",
+    "deploy": "firebase deploy"
   },
   "dependencies": {
     "dotenv": "^16.4.5",
@@ -15,6 +17,7 @@
     "react": "^18",
     "react-dom": "^18",
     "sass": "^1.78.0",
+    "sharp": "^0.33.5",
     "ts-node": "^10.9.2"
   },
   "devDependencies": {

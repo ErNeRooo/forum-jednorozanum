@@ -69,7 +69,7 @@ const ExplorePage = () => {
         <section className={styles.container}>
           <h1 className={styles.title}>
             <span className={styles.currentCategory}>{currentCategory}</span>
-            {` recent posts`}
+            {`recent posts`}
           </h1>
           <CreatePostButton setIsFormVisible={setIsCreatePostFormVisible} />
         </section>

@@ -6,8 +6,11 @@
   "hosting": {
     "public": "out",
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
-    "cleanUrls": true,
     "rewrites": [
+      {
+        "source": "/explore",
+        "destination": "/explore.html"
+      },
       {
         "source": "**",
         "destination": "/index.html"

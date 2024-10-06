@@ -13,6 +13,7 @@ const CountPosts = async (category: string): Promise<number> => {
   );
 
   return await getCountFromServer(Query).then((querySnapshot) => {
+    if (querySnapshot.data() === undefined) return 0;
     return querySnapshot.data().count;
   });
 };

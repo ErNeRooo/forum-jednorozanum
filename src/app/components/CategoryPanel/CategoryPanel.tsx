@@ -17,17 +17,24 @@ const CategoryPanel = ({ currentCategory, setCurrentCategory }: Props) => {
 
   return (
     <div className={styles.CategoryPanel}>
-      {categories.map((category, index) => (
-        <div
-          key={category}
-          className={
-            styles.category + currentCategory === category ? styles.active : ""
-          }
-          onClick={() => setCurrentCategory(category)}
-        >
-          {index !== categories.length - 1 ? category + " / " : category}
-        </div>
-      ))}
+      {categories !== undefined &&
+        categories.map((category, index) => (
+          <div
+            key={category}
+            className={
+              styles.category + currentCategory === category
+                ? styles.active
+                : ""
+            }
+            onClick={() => setCurrentCategory(category)}
+          >
+            {categories !== undefined
+              ? index !== categories.length - 1
+                ? category + " / "
+                : category
+              : ""}
+          </div>
+        ))}
     </div>
   );
 };
