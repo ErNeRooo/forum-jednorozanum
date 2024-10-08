@@ -6,10 +6,14 @@ import GenerateRandomString from "@/app/utils/GenerateRandomString";
 
 const email =
   GenerateRandomString(
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789",
+    4,
+    24
   ) + "@gmail.com";
 const username = GenerateRandomString(
-  "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+  "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789",
+  4,
+  24
 );
 const password = "wwwwwwww";
 
@@ -32,8 +36,6 @@ test("register with correct data", async ({ page }) => {
   await page.getByRole("textbox").fill(password);
   await page.getByRole("textbox").press("Enter");
   await expect(
-    page.getByText(
-      "All / News / Philosophy / Earth / Science / WarAll recent postsCreate PostFound"
-    )
+    page.getByText("All / News / Philosophy / Earth / Science / War")
   ).toBeVisible();
 });

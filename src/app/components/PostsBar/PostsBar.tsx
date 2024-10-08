@@ -95,14 +95,14 @@ const PostsBar = ({
             );
           })}
 
-      {postsQuantityInCategory > posts.length && (
+      {postsQuantityInCategory > posts.length && searchPhrase === "" ? (
         <SeeMorePostsButton
           postLimit={postLimit}
           category={category}
           setPostLimit={setPostLimit}
           setPosts={setPosts}
         />
-      )}
+      ) : null}
     </div>
   );
 };

@@ -2,7 +2,7 @@ import Image from "next/image";
 import styles from "./CommentsVisibilityButton.module.sass";
 import showIcon from "../../../../public/showCommentsIcon.svg";
 import hideIcon from "../../../../public/hideCommentsIcon.svg";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const CommentsVisibilityButton = ({
   setIsCommentsVisible,
@@ -13,9 +13,7 @@ const CommentsVisibilityButton = ({
   );
   const [backgroundColor, setBackgroundColor] = useState<string>("black");
 
-  const handleOnClick = (): void => {
-    setIsCommentsVisible((prev) => !prev);
-
+  useEffect(() => {
     if (isCommentsVisible) {
       setFilter("brightness(0%)");
       setBackgroundColor("#31A436");
@@ -25,7 +23,7 @@ const CommentsVisibilityButton = ({
       );
       setBackgroundColor("black");
     }
-  };
+  }, [isCommentsVisible]);
 
   const handleOnMouseOver = (): void => {
     if (isCommentsVisible) {
@@ -54,7 +52,7 @@ const CommentsVisibilityButton = ({
   return (
     <div
       className={styles.CommentsVisibilityButton}
-      onClick={handleOnClick}
+      onClick={() => setIsCommentsVisible((prev) => !prev)}
       onMouseOver={handleOnMouseOver}
       onMouseLeave={handleOnMouseLeave}
       style={{
