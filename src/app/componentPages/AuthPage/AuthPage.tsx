@@ -15,6 +15,7 @@ const AuthPage = () => {
     return (
       <div className={styles.AuthPage}>
         <ConsoleContent setIsLoading={setIsLoading} />
+        <span className={styles.version}>v. 1.0</span>
       </div>
     );
   }

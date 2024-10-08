@@ -8,7 +8,8 @@
     "build": "next build",
     "test": "jest",
     "export": "next export",
-    "deploy": "firebase deploy"
+    "deploy": "firebase deploy",
+    "start": "next start"
   },
   "dependencies": {
     "dotenv": "^16.4.5",

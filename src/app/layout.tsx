@@ -1,10 +1,17 @@
 import type { Metadata } from "next";
-import { Handjet } from "next/font/google";
+import { Handjet, Share_Tech_Mono } from "next/font/google";
 import "./global.sass";
 
 const inter = Handjet({
   subsets: ["latin"],
   weight: ["300", "400"],
+  display: "swap",
+  adjustFontFallback: false,
+});
+
+const shareTechMono = Share_Tech_Mono({
+  subsets: ["latin"],
+  weight: ["400"],
   display: "swap",
   adjustFontFallback: false,
 });
