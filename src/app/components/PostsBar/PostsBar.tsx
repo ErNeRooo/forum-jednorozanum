@@ -9,6 +9,8 @@ import { getAuth, User } from "firebase/auth";
 import { app } from "@/app/firebaseConfig";
 import SeeMorePostsButton from "../SeeMorePostsButton/SeeMorePostsButton";
 import Account from "@/app/types/Account";
+import SortPostsByIsPinned from "@/app/utils/SortPostsByIsPinned";
+import SortPostsByDate from "@/app/utils/SortPostsByDate";
 
 const PostsBar = ({
   category,
@@ -29,7 +31,7 @@ const PostsBar = ({
       setIsLoading(true);
       setPostLimit(10);
       GetPosts(category, 10).then((posts) => {
-        setPosts(posts);
+        setPosts(SortPostsByIsPinned(posts));
       });
       GetAccountByUid(user.uid).then((account) => {
         if (!account) return;
@@ -44,11 +46,7 @@ const PostsBar = ({
 
   useEffect(() => {
     setPosts((prev) => {
-      return [...prev].sort((a, b) => {
-        if (a.isPinned && !b.isPinned) return -1;
-        if (!a.isPinned && b.isPinned) return 1;
-        return 0;
-      });
+      return SortPostsByIsPinned(SortPostsByDate(prev, "desc"));
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [setPosts]);

@@ -101,6 +101,7 @@ const Post = ({
         <FormForCreatingComments
           setIsFormVisible={setIsFormForCreatingCommentsVisible}
           setPosts={setPosts}
+          setIsCommentsVisible={setIsCommentsVisible}
           userName={userName}
           postUid={id}
         />

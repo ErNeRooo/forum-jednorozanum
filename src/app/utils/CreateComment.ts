@@ -21,7 +21,7 @@ const CreateComment = (
   setPosts: React.Dispatch<
     React.SetStateAction<(prev: PostTypes[]) => PostTypes[] | PostTypes[]>
   >
-) => {
+): void => {
   GetAccountByUid(userUid).then((account) => {
     if (!account) {
       console.log("Account not found");

@@ -6,6 +6,7 @@ import GenerateRandomString from "./GenerateRandomString";
 import AddFileToDatabase from "./AddFileToDatabase";
 import { ref } from "firebase/storage";
 import { storage } from "../firebaseConfig";
+import SortPostsByIsPinned from "./SortPostsByIsPinned";
 
 const CreatePost = (
   userUid: string,
@@ -92,7 +93,7 @@ const CreatePost = (
         setPostsQuantityInCategory((prev) => prev + 1);
         setIsFormVisible(false);
         setIsLoading(false);
-        setPosts((prev) => [post, ...prev]);
+        setPosts((prev) => SortPostsByIsPinned([post, ...prev]));
       })
       .catch((error) => {
         setIsLoading(false);

@@ -12,6 +12,7 @@ import AttachFileButton from "../AttachFileButton/AttachFileButton";
 const FormForCreatingComments = ({
   setIsFormVisible,
   setPosts,
+  setIsCommentsVisible,
   userName,
   postUid,
 }: Props) => {
@@ -58,6 +59,8 @@ const FormForCreatingComments = ({
         React.SetStateAction<(prev: PostTypes[]) => PostTypes[] | PostTypes[]>
       >
     );
+
+    setIsCommentsVisible(true);
 
     setIsLoading(true);
   };
@@ -112,6 +115,7 @@ const FormForCreatingComments = ({
 interface Props {
   setIsFormVisible: React.Dispatch<React.SetStateAction<boolean>>;
   setPosts: React.Dispatch<React.SetStateAction<PostTypes[]>>;
+  setIsCommentsVisible: React.Dispatch<React.SetStateAction<boolean>>;
   userName: string;
   postUid: string;
 }

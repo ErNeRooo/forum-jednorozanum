@@ -4,6 +4,7 @@ import UpdatePinPost from "@/app/utils/UpdatePinPost";
 import { CSSProperties, useState } from "react";
 import Image from "next/image";
 import pinIcon from "../../../../public/pinIcon.svg";
+import SortPostsByIsPinned from "@/app/utils/SortPostsByIsPinned";
 
 const PinPostButton = ({ postUid, isPinned, setIsPinned, setPosts }: Props) => {
   const pickColor = isPinned
@@ -15,16 +16,12 @@ const PinPostButton = ({ postUid, isPinned, setIsPinned, setPosts }: Props) => {
     setIsPinned(!isPinned);
     UpdatePinPost(postUid, isPinned).then(() => {
       setPosts((prev) => {
-        return prev
-          .map((post) => {
+        return SortPostsByIsPinned(
+          prev.map((post) => {
             if (post.id !== postUid) return post;
             return { ...post, isPinned: !isPinned };
           })
-          .sort((a, b) => {
-            if (a.isPinned && !b.isPinned) return -1;
-            if (!a.isPinned && b.isPinned) return 1;
-            return 0;
-          });
+        );
       });
     });
   };
